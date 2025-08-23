@@ -3,7 +3,7 @@ Symbolic mathematics and algebraic computation using SymPy.
 """
 
 import sympy as sp
-from typing import List, Tuple, Union, Dict, Any
+from typing import List, Tuple, Union, Dict, Any, Optional
 from sympy import symbols, sympify, latex, simplify, expand, factor, solve, diff, integrate
 from sympy import sin, cos, tan, exp, log, sqrt, pi, E, oo, I
 from sympy.parsing.sympy_parser import parse_expr
@@ -13,14 +13,14 @@ class SymbolicMath:
     """Main class for symbolic mathematical operations."""
     
     @staticmethod
-    def create_symbol(name: str, **assumptions) -> sp.Symbol:
+    def create_symbol(name: str, **assumptions: Dict[str, Any]) -> sp.Symbol:
         """Create a symbolic variable with optional assumptions."""
         return symbols(name, **assumptions)
     
     @staticmethod
-    def create_symbols(names: str, **assumptions) -> Tuple[sp.Symbol, ...]:
+    def create_symbols(names: str, **assumptions: Dict[str, Any]) -> Tuple[sp.Symbol, ...]:
         """Create multiple symbolic variables."""
-        return symbols(names, **assumptions)
+        return tuple(symbols(names, **assumptions))
     
     @staticmethod
     def parse_expression(expr_str: str) -> sp.Expr:
@@ -76,7 +76,7 @@ class SymbolicMath:
         elif isinstance(variable, str):
             variable = symbols(variable)
         
-        return solve(equation, variable)
+        return list(solve(equation, variable))
     
     @staticmethod
     def differentiate(expr: Union[str, sp.Expr], variable: Union[str, sp.Symbol], order: int = 1) -> sp.Expr:
@@ -90,7 +90,7 @@ class SymbolicMath:
     
     @staticmethod
     def integrate(expr: Union[str, sp.Expr], variable: Union[str, sp.Symbol], 
-                  limits: Tuple[Any, Any] = None) -> sp.Expr:
+                  limits: Optional[Tuple[Any, Any]] = None) -> sp.Expr:
         """Compute the integral of an expression."""
         if isinstance(expr, str):
             expr = SymbolicMath.parse_expression(expr)
@@ -122,10 +122,10 @@ class SymbolicMath:
         """Convert expression to LaTeX format."""
         if isinstance(expr, str):
             expr = SymbolicMath.parse_expression(expr)
-        return latex(expr)
+        return str(latex(expr))
     
     @staticmethod
-    def evaluate_expression(expr: Union[str, sp.Expr], substitutions: Dict[str, float] = None) -> Union[float, complex]:
+    def evaluate_expression(expr: Union[str, sp.Expr], substitutions: Optional[Dict[str, float]] = None) -> Union[float, complex]:
         """Evaluate an expression numerically."""
         if isinstance(expr, str):
             expr = SymbolicMath.parse_expression(expr)
@@ -201,7 +201,7 @@ class AlgebraUtils:
                 var = symbols(var)
             vars_list.append(var)
         
-        return solve(eqs, vars_list)
+        return dict(solve(eqs, vars_list))
     
     @staticmethod
     def partial_fractions(expr: Union[str, sp.Expr], variable: Union[str, sp.Symbol]) -> sp.Expr:

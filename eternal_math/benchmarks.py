@@ -33,7 +33,7 @@ class BenchmarkResult:
 class PerformanceBenchmark:
     """Performance benchmarking system for mathematical algorithms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the benchmark system."""
         self.results: List[BenchmarkResult] = []
     
@@ -95,7 +95,7 @@ class PerformanceBenchmark:
         # Check for common keyword arguments
         for key in ['n', 'limit', 'max_value', 'size']:
             if key in kwargs:
-                return kwargs[key]
+                return int(kwargs[key])
         
         return 0
     
@@ -112,7 +112,7 @@ class PerformanceBenchmark:
         if sizes is None:
             sizes = [100, 500, 1000, 5000, 10000]
         
-        results = {
+        results: Dict[str, List[BenchmarkResult]] = {
             'sieve_of_eratosthenes': [],
             'is_prime_checks': []
         }
@@ -247,7 +247,7 @@ class PerformanceBenchmark:
         report = ["=== Eternal Math Performance Report ===\n"]
         
         # Group results by function
-        by_function = {}
+        by_function: Dict[str, List[BenchmarkResult]] = {}
         for result in self.results:
             if result.function_name not in by_function:
                 by_function[result.function_name] = []
@@ -285,7 +285,7 @@ class PerformanceBenchmark:
         print(f"Benchmark results saved to: {filename}")
 
 
-def run_performance_analysis():
+def run_performance_analysis() -> PerformanceBenchmark:
     """Run a complete performance analysis of eternal-math algorithms."""
     benchmark = PerformanceBenchmark()
     
