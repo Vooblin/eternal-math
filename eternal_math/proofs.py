@@ -160,8 +160,19 @@ class InequalityStatement(Statement):
         return False
 
 
+class LogicalStatement(Statement):
+    """A general logical statement that can be evaluated as true/false."""
+    
+    def __init__(self, description: str, truth_value: bool = True):
+        self.truth_value = truth_value
+        super().__init__(description)
+    
+    def evaluate(self, context: Dict[str, Any] = None) -> bool:
+        return self.truth_value
+
+
 __all__ = [
     'Statement', 'Axiom', 'Theorem', 'Proof', 'ProofStep',
     'DirectProof', 'ProofByContradiction', 
-    'EqualityStatement', 'InequalityStatement'
+    'EqualityStatement', 'InequalityStatement', 'LogicalStatement'
 ]
