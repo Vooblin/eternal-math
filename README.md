@@ -37,6 +37,38 @@ pip install -e .
 
 ## Quick Start
 
+### Interactive CLI
+
+Start the interactive command-line interface:
+
+```bash
+# After installation
+eternal-math
+
+# Or directly with Python
+python -m eternal_math.cli
+```
+
+The CLI provides interactive access to all mathematical functions:
+
+```
+eternal-math> primes 30
+🔍 Prime numbers up to 30:
+   [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+   Found 10 primes
+
+eternal-math> fibonacci 8
+🌀 First 8 Fibonacci numbers:
+   [0, 1, 1, 2, 3, 5, 8, 13]
+   Golden ratio approximation: 1.625000
+
+eternal-math> help
+📚 Eternal Math CLI Commands:
+[... complete help menu ...]
+```
+
+### Python API
+
 ```python
 from eternal_math import sieve_of_eratosthenes, fibonacci_sequence, twin_primes
 
@@ -52,6 +84,7 @@ print(f"Fibonacci: {fib}")
 twins = twin_primes(30)
 print(f"Twin primes: {twins}")
 ```
+```
 
 ## Examples
 
@@ -63,9 +96,19 @@ python examples/number_theory_exploration.py
 
 ## Testing
 
-Run the test suite:
+Run the complete test suite:
 
 ```bash
+# Run all tests
+pytest tests/
+
+# Run specific test modules
+pytest tests/test_core.py
+pytest tests/test_number_theory.py
+pytest tests/test_proofs.py
+pytest tests/test_cli.py
+
+# Or run individual modules (legacy method)
 python -m tests.test_core
 python -m tests.test_number_theory
 ```
@@ -77,8 +120,11 @@ eternal-math/
 ├── eternal_math/          # Main package
 │   ├── core.py           # Core mathematical objects
 │   ├── proofs.py         # Proof system and logic
-│   └── number_theory.py  # Number theory utilities
+│   ├── number_theory.py  # Number theory utilities
+│   └── cli.py           # Interactive command-line interface
 ├── tests/                # Test suite
+│   ├── test_cli.py      # CLI functionality tests
+│   └── ...              # Other test modules
 ├── examples/             # Usage examples
 └── pyproject.toml       # Project configuration
 ```
