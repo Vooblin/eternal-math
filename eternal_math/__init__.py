@@ -11,6 +11,7 @@ from .core import *
 from .proofs import *
 from .number_theory import *
 from .symbolic import *
+from .visualization import *
 
 # CLI is available but not imported by default to avoid unnecessary dependencies
 # Import with: from eternal_math.cli import main

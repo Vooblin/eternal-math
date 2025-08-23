@@ -11,7 +11,8 @@ from eternal_math import (
     twin_primes, verify_goldbach_conjecture, euler_totient,
     collatz_sequence, NumberTheoryUtils,
     create_fundamental_theorem_of_arithmetic,
-    SymbolicMath, CalculusUtils, AlgebraUtils
+    SymbolicMath, CalculusUtils, AlgebraUtils,
+    MathVisualizer, create_output_directory
 )
 
 
@@ -42,10 +43,18 @@ class EternalMathCLI:
             'limit': self._limit,
             'taylor': self._taylor_series,
             'substitute': self._substitute,
+            # Visualization commands
+            'plot': self._plot_function,
+            'plotseq': self._plot_sequence,
+            'plotprimes': self._plot_primes,
+            'plotcollatz': self._plot_collatz,
+            'plotcomp': self._plot_comparative,
             'quit': self._quit,
             'exit': self._quit,
         }
         self.running = True
+        self.visualizer = MathVisualizer()
+        self.output_dir = create_output_directory()
     
     def run(self):
         """Start the interactive CLI session."""
@@ -104,6 +113,12 @@ class EternalMathCLI:
         print("  limit <expr> <var> <point> - Compute limit")
         print("  taylor <expr> <var> [point] [order] - Taylor series")
         print("  substitute <expr> <var=val> - Substitute values")
+        print("\n📊 Visualization:")
+        print("  plot <expr>       - Plot mathematical function")
+        print("  plotseq <type> <n> - Plot sequence (fibonacci/primes)")
+        print("  plotprimes <n>    - Plot prime distribution up to n")
+        print("  plotcollatz <n1,n2,...> - Plot Collatz trajectories")
+        print("  plotcomp <type1> <type2> <n> - Compare sequences")
         print("\n❓ General:")
         print("  examples          - Show usage examples")
         print("  help              - Show this help")
@@ -520,6 +535,197 @@ class EternalMathCLI:
             print(f"   Result: {result}\n")
         except Exception as e:
             print(f"Error substituting values: {e}\n")
+
+    def _plot_function(self, args: List[str]):
+        """Plot a mathematical function."""
+        if not args:
+            print("Usage: plot <expression>")
+            print("Example: plot x**2")
+            print("Example: plot sin(x)")
+            return
+        
+        try:
+            expression = ' '.join(args)
+            print(f"\n📊 Plotting function: f(x) = {expression}")
+            
+            # Try to determine a good range based on the function
+            x_range = (-10, 10)
+            if any(func in expression for func in ['exp', 'log']):
+                x_range = (-5, 5)
+            elif 'tan' in expression:
+                x_range = (-3, 3)
+            
+            success = self.visualizer.plot_function(
+                expression, 
+                x_range=x_range,
+                title=f"Graph of f(x) = {expression}"
+            )
+            
+            if success:
+                print("✅ Plot displayed successfully!")
+            else:
+                print("❌ Failed to create plot")
+                
+        except Exception as e:
+            print(f"Error plotting function: {e}\n")
+
+    def _plot_sequence(self, args: List[str]):
+        """Plot a mathematical sequence."""
+        if len(args) < 2:
+            print("Usage: plotseq <type> <n>")
+            print("Types: fibonacci, primes")
+            print("Example: plotseq fibonacci 10")
+            return
+        
+        try:
+            seq_type = args[0].lower()
+            n = int(args[1])
+            
+            if seq_type == 'fibonacci':
+                sequence = fibonacci_sequence(n)
+                title = f"First {n} Fibonacci Numbers"
+            elif seq_type == 'primes':
+                primes = sieve_of_eratosthenes(n)
+                sequence = primes[:min(20, len(primes))]  # Limit to first 20 for visibility
+                title = f"Prime Numbers up to {n}"
+            else:
+                print(f"Unknown sequence type: {seq_type}")
+                return
+            
+            print(f"\n📊 Plotting {seq_type} sequence...")
+            success = self.visualizer.plot_sequence(
+                sequence,
+                title=title
+            )
+            
+            if success:
+                print("✅ Sequence plot displayed successfully!")
+            else:
+                print("❌ Failed to create sequence plot")
+                
+        except ValueError:
+            print("Error: Invalid number format\n")
+        except Exception as e:
+            print(f"Error plotting sequence: {e}\n")
+
+    def _plot_primes(self, args: List[str]):
+        """Plot prime number distribution."""
+        if not args:
+            print("Usage: plotprimes <n>")
+            print("Example: plotprimes 100")
+            return
+        
+        try:
+            n = int(args[0])
+            if n < 2:
+                print("Number must be at least 2")
+                return
+            
+            print(f"\n📊 Plotting prime distribution up to {n}...")
+            primes = sieve_of_eratosthenes(n)
+            
+            success = self.visualizer.plot_prime_distribution(primes, n)
+            
+            if success:
+                print("✅ Prime distribution plot displayed successfully!")
+                print(f"   Found {len(primes)} primes up to {n}")
+            else:
+                print("❌ Failed to create prime distribution plot")
+                
+        except ValueError:
+            print("Error: Invalid number format\n")
+        except Exception as e:
+            print(f"Error plotting primes: {e}\n")
+
+    def _plot_collatz(self, args: List[str]):
+        """Plot Collatz sequence trajectories."""
+        if not args:
+            print("Usage: plotcollatz <n1,n2,n3,...>")
+            print("Example: plotcollatz 3,7,15,27")
+            return
+        
+        try:
+            # Parse comma-separated numbers
+            numbers_str = ' '.join(args)
+            numbers = [int(x.strip()) for x in numbers_str.split(',')]
+            
+            if len(numbers) > 6:
+                numbers = numbers[:6]  # Limit to 6 sequences for readability
+                print("Note: Limited to first 6 numbers for better visualization")
+            
+            print(f"\n📊 Plotting Collatz sequences for: {numbers}")
+            
+            sequences = []
+            for num in numbers:
+                if num > 0:
+                    seq = collatz_sequence(num)
+                    sequences.append(seq)
+            
+            if not sequences:
+                print("No valid positive numbers provided")
+                return
+            
+            success = self.visualizer.plot_collatz_trajectory(sequences, numbers)
+            
+            if success:
+                print("✅ Collatz trajectories displayed successfully!")
+            else:
+                print("❌ Failed to create Collatz plot")
+                
+        except ValueError:
+            print("Error: Invalid number format. Use comma-separated positive integers\n")
+        except Exception as e:
+            print(f"Error plotting Collatz sequences: {e}\n")
+
+    def _plot_comparative(self, args: List[str]):
+        """Plot comparative sequences."""
+        if len(args) < 3:
+            print("Usage: plotcomp <type1> <type2> <n>")
+            print("Types: fibonacci, primes, collatz, euler")
+            print("Example: plotcomp fibonacci primes 10")
+            return
+        
+        try:
+            type1, type2 = args[0].lower(), args[1].lower()
+            n = int(args[2])
+            
+            sequences = {}
+            
+            # Generate sequences based on types
+            for seq_type in [type1, type2]:
+                if seq_type == 'fibonacci':
+                    sequences['Fibonacci'] = fibonacci_sequence(min(n, 15))
+                elif seq_type == 'primes':
+                    primes = sieve_of_eratosthenes(n * 10)  # Get more primes
+                    sequences['Primes'] = primes[:min(n, 15)]
+                elif seq_type == 'euler':
+                    sequences['Euler φ(n)'] = [euler_totient(i) for i in range(1, min(n, 15) + 1)]
+                elif seq_type == 'collatz':
+                    # Use length of Collatz sequences
+                    sequences['Collatz Steps'] = [len(collatz_sequence(i)) for i in range(1, min(n, 15) + 1)]
+                else:
+                    print(f"Unknown sequence type: {seq_type}")
+                    return
+            
+            if len(sequences) < 2:
+                print("Need two different sequence types")
+                return
+            
+            print(f"\n📊 Comparing {type1} vs {type2} sequences...")
+            success = self.visualizer.plot_comparative_sequences(
+                sequences,
+                title=f"Comparison: {type1.title()} vs {type2.title()}"
+            )
+            
+            if success:
+                print("✅ Comparative plot displayed successfully!")
+            else:
+                print("❌ Failed to create comparative plot")
+                
+        except ValueError:
+            print("Error: Invalid number format\n")
+        except Exception as e:
+            print(f"Error plotting comparative sequences: {e}\n")
 
 
 def main():

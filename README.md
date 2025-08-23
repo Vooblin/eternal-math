@@ -24,6 +24,13 @@ Eternal Math provides a Python-based framework for mathematical computation, the
 - **Conjectures**: Goldbach conjecture verification, twin prime detection
 - **Advanced Tools**: Euler's totient function, Chinese Remainder Theorem
 
+### Visualization & Graphics
+- **Function Plotting**: Visualize mathematical functions with customizable ranges
+- **Sequence Visualization**: Plot mathematical sequences with annotations
+- **Prime Distribution**: Graphical analysis of prime number patterns
+- **Collatz Trajectories**: Visualize the famous 3n+1 problem paths
+- **Comparative Analysis**: Side-by-side sequence comparisons
+
 ## Installation
 
 ```bash
@@ -83,6 +90,37 @@ print(f"Fibonacci: {fib}")
 # Find twin prime pairs
 twins = twin_primes(30)
 print(f"Twin primes: {twins}")
+```
+
+### Visualization Features
+
+Create stunning mathematical visualizations:
+
+```python
+from eternal_math import MathVisualizer
+
+# Initialize visualizer
+viz = MathVisualizer()
+
+# Plot mathematical functions
+viz.plot_function("x**2", title="Quadratic Function")
+viz.plot_function("sin(x)", x_range=(-6, 6))
+
+# Visualize sequences
+from eternal_math import fibonacci_sequence, sieve_of_eratosthenes
+
+fib = fibonacci_sequence(15)
+viz.plot_sequence([float(x) for x in fib], title="Fibonacci Numbers")
+
+# Prime distribution analysis
+primes = sieve_of_eratosthenes(100)
+viz.plot_prime_distribution(primes, 100)
+
+# Interactive CLI visualization commands
+# eternal-math> plot sin(x)
+# eternal-math> plotseq fibonacci 10
+# eternal-math> plotprimes 50
+# eternal-math> plotcollatz 3,7,15
 ```
 ```
 
