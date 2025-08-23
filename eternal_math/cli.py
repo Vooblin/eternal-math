@@ -10,7 +10,8 @@ from eternal_math import (
     sieve_of_eratosthenes, fibonacci_sequence, is_perfect_number,
     twin_primes, verify_goldbach_conjecture, euler_totient,
     collatz_sequence, NumberTheoryUtils,
-    create_fundamental_theorem_of_arithmetic
+    create_fundamental_theorem_of_arithmetic,
+    SymbolicMath, CalculusUtils, AlgebraUtils
 )
 
 
@@ -31,6 +32,16 @@ class EternalMathCLI:
             'crt': self._chinese_remainder,
             'theorem': self._show_theorem,
             'examples': self._show_examples,
+            # Symbolic math commands
+            'simplify': self._simplify,
+            'expand': self._expand,
+            'factor': self._factor,
+            'solve': self._solve,
+            'diff': self._differentiate,
+            'integrate': self._integrate,
+            'limit': self._limit,
+            'taylor': self._taylor_series,
+            'substitute': self._substitute,
             'quit': self._quit,
             'exit': self._quit,
         }
@@ -83,6 +94,16 @@ class EternalMathCLI:
         print("  crt <a1,n1,a2,n2> - Chinese Remainder Theorem solver")
         print("\n🎓 Proof System:")
         print("  theorem           - Show Fundamental Theorem of Arithmetic")
+        print("\n🔣 Symbolic Mathematics:")
+        print("  simplify <expr>   - Simplify mathematical expression")
+        print("  expand <expr>     - Expand mathematical expression")
+        print("  factor <expr>     - Factor mathematical expression")
+        print("  solve <eq> [var]  - Solve equation for variable")
+        print("  diff <expr> <var> - Differentiate expression")
+        print("  integrate <expr> <var> - Integrate expression")
+        print("  limit <expr> <var> <point> - Compute limit")
+        print("  taylor <expr> <var> [point] [order] - Taylor series")
+        print("  substitute <expr> <var=val> - Substitute values")
         print("\n❓ General:")
         print("  examples          - Show usage examples")
         print("  help              - Show this help")
@@ -303,6 +324,14 @@ class EternalMathCLI:
             ("Generate Collatz sequence", "collatz 7"),
             ("Solve Chinese Remainder", "crt 2,3,3,5"),
             ("View mathematical theorem", "theorem"),
+            ("Simplify expression", "simplify (x+1)^2"),
+            ("Expand expression", "expand (x+1)*(x-1)"),
+            ("Factor expression", "factor x^2-1"),
+            ("Solve equation", "solve x^2-4=0"),
+            ("Differentiate function", "diff x^3+2*x^2 x"),
+            ("Integrate function", "integrate 2*x+1 x"),
+            ("Compute limit", "limit sin(x)/x x 0"),
+            ("Taylor series", "taylor exp(x) x 0 5"),
         ]
         
         print("\n💡 Usage Examples:")
@@ -315,6 +344,182 @@ class EternalMathCLI:
         """Exit the CLI."""
         print("\nGoodbye! Thanks for exploring mathematics! 👋\n")
         self.running = False
+    
+    # Symbolic Math Commands
+    def _simplify(self, args: List[str]):
+        """Simplify a mathematical expression."""
+        if not args:
+            print("Usage: simplify <expression>")
+            print("Example: simplify (x+1)^2 - (x^2 + 2*x + 1)")
+            return
+        
+        try:
+            expr = ' '.join(args)
+            result = SymbolicMath.simplify_expression(expr)
+            print(f"\n🔧 Simplifying: {expr}")
+            print(f"   Result: {result}\n")
+        except Exception as e:
+            print(f"Error simplifying expression: {e}\n")
+    
+    def _expand(self, args: List[str]):
+        """Expand a mathematical expression."""
+        if not args:
+            print("Usage: expand <expression>")
+            print("Example: expand (x+1)*(x-1)")
+            return
+        
+        try:
+            expr = ' '.join(args)
+            result = SymbolicMath.expand_expression(expr)
+            print(f"\n📈 Expanding: {expr}")
+            print(f"   Result: {result}\n")
+        except Exception as e:
+            print(f"Error expanding expression: {e}\n")
+    
+    def _factor(self, args: List[str]):
+        """Factor a mathematical expression."""
+        if not args:
+            print("Usage: factor <expression>")
+            print("Example: factor x^2-1")
+            return
+        
+        try:
+            expr = ' '.join(args)
+            result = SymbolicMath.factor_expression(expr)
+            print(f"\n🔍 Factoring: {expr}")
+            print(f"   Result: {result}\n")
+        except Exception as e:
+            print(f"Error factoring expression: {e}\n")
+    
+    def _solve(self, args: List[str]):
+        """Solve an equation."""
+        if not args:
+            print("Usage: solve <equation> [variable]")
+            print("Example: solve x^2-4=0")
+            print("Example: solve x^2+y-4=0 x")
+            return
+        
+        try:
+            if len(args) == 1:
+                equation = args[0]
+                variable = None
+            else:
+                equation = args[0]
+                variable = args[1]
+            
+            solutions = SymbolicMath.solve_equation(equation, variable)
+            print(f"\n🎯 Solving: {equation}")
+            if variable:
+                print(f"   For variable: {variable}")
+            print(f"   Solutions: {solutions}\n")
+        except Exception as e:
+            print(f"Error solving equation: {e}\n")
+    
+    def _differentiate(self, args: List[str]):
+        """Differentiate an expression."""
+        if len(args) < 2:
+            print("Usage: diff <expression> <variable>")
+            print("Example: diff x^3+2*x^2 x")
+            return
+        
+        try:
+            expr = args[0]
+            variable = args[1]
+            result = SymbolicMath.differentiate(expr, variable)
+            print(f"\n📊 Differentiating: {expr}")
+            print(f"   With respect to: {variable}")
+            print(f"   Result: {result}\n")
+        except Exception as e:
+            print(f"Error differentiating expression: {e}\n")
+    
+    def _integrate(self, args: List[str]):
+        """Integrate an expression."""
+        if len(args) < 2:
+            print("Usage: integrate <expression> <variable>")
+            print("Example: integrate 2*x+1 x")
+            return
+        
+        try:
+            expr = args[0]
+            variable = args[1]
+            result = SymbolicMath.integrate(expr, variable)
+            print(f"\n∫ Integrating: {expr}")
+            print(f"   With respect to: {variable}")
+            print(f"   Result: {result} + C\n")
+        except Exception as e:
+            print(f"Error integrating expression: {e}\n")
+    
+    def _limit(self, args: List[str]):
+        """Compute a limit."""
+        if len(args) < 3:
+            print("Usage: limit <expression> <variable> <point>")
+            print("Example: limit sin(x)/x x 0")
+            print("Example: limit 1/x x oo")
+            return
+        
+        try:
+            expr = args[0]
+            variable = args[1] 
+            point = args[2]
+            result = CalculusUtils.limit(expr, variable, point)
+            print(f"\n🎯 Limit of: {expr}")
+            print(f"   As {variable} approaches: {point}")
+            print(f"   Result: {result}\n")
+        except Exception as e:
+            print(f"Error computing limit: {e}\n")
+    
+    def _taylor_series(self, args: List[str]):
+        """Compute Taylor series."""
+        if len(args) < 2:
+            print("Usage: taylor <expression> <variable> [point] [order]")
+            print("Example: taylor exp(x) x 0 5")
+            print("Example: taylor sin(x) x")
+            return
+        
+        try:
+            expr = args[0]
+            variable = args[1]
+            point = float(args[2]) if len(args) > 2 else 0
+            order = int(args[3]) if len(args) > 3 else 6
+            
+            result = CalculusUtils.taylor_series(expr, variable, point, order)
+            print(f"\n📈 Taylor series of: {expr}")
+            print(f"   Variable: {variable}")
+            print(f"   Around point: {point}")
+            print(f"   Order: {order}")
+            print(f"   Result: {result}\n")
+        except Exception as e:
+            print(f"Error computing Taylor series: {e}\n")
+    
+    def _substitute(self, args: List[str]):
+        """Substitute values into an expression."""
+        if len(args) < 2:
+            print("Usage: substitute <expression> <var=value> [var2=value2]")
+            print("Example: substitute x^2+y x=2 y=3")
+            return
+        
+        try:
+            expr = args[0]
+            substitutions = {}
+            
+            for sub in args[1:]:
+                if '=' not in sub:
+                    print(f"Invalid substitution format: {sub}")
+                    return
+                var, val = sub.split('=', 1)
+                try:
+                    substitutions[var.strip()] = float(val.strip())
+                except ValueError:
+                    # If it's not a number, treat as symbolic
+                    substitutions[var.strip()] = val.strip()
+            
+            result = SymbolicMath.substitute(expr, substitutions)
+            print(f"\n🔄 Substituting into: {expr}")
+            for var, val in substitutions.items():
+                print(f"   {var} = {val}")
+            print(f"   Result: {result}\n")
+        except Exception as e:
+            print(f"Error substituting values: {e}\n")
 
 
 def main():
