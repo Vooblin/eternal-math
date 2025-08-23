@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "An open-source software platform for exploring, proving, and generating mathematical concepts"
 readme = "README.md"
 license = "MIT"
+keywords = ["mathematics", "number-theory", "symbolic-math", "visualization", "proofs"]
 authors = [
     { name = "Dmitrii Murygin", email = "dmitrij.murygin7@gmail.com" }
 ]
@@ -19,7 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
-requires-python = "==3.12"
+requires-python = ">=3.12"
 dependencies = [
     "numpy>=1.21.0",
     "sympy>=1.9",
