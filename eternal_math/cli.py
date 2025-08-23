@@ -9,10 +9,11 @@ from typing import List
 from eternal_math import (
     sieve_of_eratosthenes, fibonacci_sequence, is_perfect_number,
     twin_primes, verify_goldbach_conjecture, euler_totient,
-    collatz_sequence, NumberTheoryUtils,
+    collatz_sequence, NumberTheoryUtils, gcd,
     create_fundamental_theorem_of_arithmetic,
     SymbolicMath, CalculusUtils, AlgebraUtils,
-    MathVisualizer, create_output_directory
+    MathVisualizer, create_output_directory,
+    PerformanceBenchmark, run_performance_analysis
 )
 
 
@@ -49,6 +50,7 @@ class EternalMathCLI:
             'plotprimes': self._plot_primes,
             'plotcollatz': self._plot_collatz,
             'plotcomp': self._plot_comparative,
+            'benchmark': self._benchmark,
             'quit': self._quit,
             'exit': self._quit,
         }
@@ -119,6 +121,9 @@ class EternalMathCLI:
         print("  plotprimes <n>    - Plot prime distribution up to n")
         print("  plotcollatz <n1,n2,...> - Plot Collatz trajectories")
         print("  plotcomp <type1> <type2> <n> - Compare sequences")
+        print("\n⏱️ Performance:")
+        print("  benchmark         - Run quick performance benchmarks")
+        print("  benchmark full    - Run comprehensive benchmark suite")
         print("\n❓ General:")
         print("  examples          - Show usage examples")
         print("  help              - Show this help")
@@ -726,6 +731,39 @@ class EternalMathCLI:
             print("Error: Invalid number format\n")
         except Exception as e:
             print(f"Error plotting comparative sequences: {e}\n")
+    
+    def _benchmark(self, args: List[str]):
+        """Run performance benchmarks."""
+        if args and args[0] == 'full':
+            print("\n⏱️ Running comprehensive performance benchmarks...")
+            print("This may take a moment...\n")
+            try:
+                benchmark = run_performance_analysis()
+                print("\n📊 Benchmark completed successfully!")
+                print("Report saved to performance_report.txt")
+                print("Performance plots saved to math_plots/")
+            except Exception as e:
+                print(f"❌ Benchmark failed: {e}")
+        else:
+            print("\n⏱️ Running quick performance benchmarks...")
+            try:
+                benchmark = PerformanceBenchmark()
+                
+                # Run a small subset of benchmarks
+                print("Testing prime generation...")
+                benchmark.time_function(sieve_of_eratosthenes, 1000, iterations=3)
+                
+                print("Testing Fibonacci sequence...")
+                benchmark.time_function(fibonacci_sequence, 100, iterations=3)
+                
+                print("Testing GCD calculations...")
+                benchmark.time_function(lambda: [gcd(i, 100) for i in range(1, 51)], iterations=5)
+                
+                print("\n📈 Quick Benchmark Results:")
+                print(benchmark.generate_performance_report())
+                
+            except Exception as e:
+                print(f"❌ Benchmark failed: {e}")
 
 
 def main():

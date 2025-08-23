@@ -31,6 +31,13 @@ Eternal Math provides a Python-based framework for mathematical computation, the
 - **Collatz Trajectories**: Visualize the famous 3n+1 problem paths
 - **Comparative Analysis**: Side-by-side sequence comparisons
 
+### Performance Benchmarking
+- **Algorithm Timing**: Measure execution time of mathematical functions
+- **Performance Analysis**: Compare different algorithms and input sizes
+- **Statistical Metrics**: Mean, standard deviation, min/max timing
+- **Comprehensive Reports**: Detailed performance analysis with visualizations
+- **CLI Integration**: Built-in benchmarking commands for interactive testing
+
 ## Installation
 
 ```bash
@@ -122,6 +129,35 @@ viz.plot_prime_distribution(primes, 100)
 # eternal-math> plotprimes 50
 # eternal-math> plotcollatz 3,7,15
 ```
+
+### Performance Benchmarking
+
+Analyze algorithm performance and optimize mathematical computations:
+
+```python
+from eternal_math import PerformanceBenchmark, run_performance_analysis
+
+# Create benchmark instance
+benchmark = PerformanceBenchmark()
+
+# Benchmark individual functions
+result = benchmark.time_function(sieve_of_eratosthenes, 10000, iterations=5)
+print(f"Mean time: {result.mean_time:.6f} seconds")
+
+# Compare algorithm performance
+prime_results = benchmark.benchmark_prime_algorithms([100, 1000, 10000])
+fib_results = benchmark.benchmark_fibonacci_algorithms([50, 100, 200])
+
+# Generate performance report
+print(benchmark.generate_performance_report())
+
+# Run comprehensive benchmark suite
+run_performance_analysis()  # Creates detailed report and visualizations
+
+# CLI benchmarking commands
+# eternal-math> benchmark       # Quick benchmarks
+# eternal-math> benchmark full  # Comprehensive analysis
+```
 ```
 
 ## Examples
@@ -159,9 +195,13 @@ eternal-math/
 │   ├── core.py           # Core mathematical objects
 │   ├── proofs.py         # Proof system and logic
 │   ├── number_theory.py  # Number theory utilities
+│   ├── symbolic.py       # Symbolic mathematics with SymPy
+│   ├── visualization.py  # Mathematical plotting and graphics
+│   ├── benchmarks.py     # Performance benchmarking system
 │   └── cli.py           # Interactive command-line interface
 ├── tests/                # Test suite
 │   ├── test_cli.py      # CLI functionality tests
+│   ├── test_benchmarks.py # Benchmarking system tests
 │   └── ...              # Other test modules
 ├── examples/             # Usage examples
 └── pyproject.toml       # Project configuration

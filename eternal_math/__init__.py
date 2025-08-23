@@ -13,5 +13,8 @@ from .number_theory import *
 from .symbolic import *
 from .visualization import *
 
+# Benchmarking utilities
+from .benchmarks import PerformanceBenchmark, BenchmarkResult, run_performance_analysis
+
 # CLI is available but not imported by default to avoid unnecessary dependencies
 # Import with: from eternal_math.cli import main
