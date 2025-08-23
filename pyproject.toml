@@ -39,6 +39,9 @@ dev = [
 "Bug Reports" = "https://github.com/Vooblin/eternal-math/issues"
 "Source" = "https://github.com/Vooblin/eternal-math"
 
+[project.scripts]
+eternal-math = "eternal_math.cli:main"
+
 [tool.black]
 line-length = 88
 target-version = ['py312']
