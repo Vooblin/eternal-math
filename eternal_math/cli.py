@@ -5,7 +5,7 @@ This module provides an interactive CLI for exploring mathematical concepts,
 running calculations, and examining proofs.
 """
 
-from typing import List
+from typing import List, Optional, Dict, Any
 from eternal_math import (
     sieve_of_eratosthenes, fibonacci_sequence, is_perfect_number,
     twin_primes, verify_goldbach_conjecture, euler_totient,
@@ -20,7 +20,7 @@ from eternal_math import (
 class EternalMathCLI:
     """Interactive CLI for Eternal Math exploration."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the CLI with available commands."""
         self.commands = {
             'help': self._help,
@@ -58,7 +58,7 @@ class EternalMathCLI:
         self.visualizer = MathVisualizer()
         self.output_dir = create_output_directory()
     
-    def run(self):
+    def run(self) -> None:
         """Start the interactive CLI session."""
         print("🧮 Welcome to Eternal Math Interactive CLI")
         print("=" * 50)
@@ -90,7 +90,7 @@ class EternalMathCLI:
             except Exception as e:
                 print(f"Error: {e}\n")
     
-    def _help(self, args: List[str]):
+    def _help(self, args: List[str]) -> None:
         """Display help information."""
         print("\n📚 Eternal Math CLI Commands:")
         print("-" * 40)
@@ -129,7 +129,7 @@ class EternalMathCLI:
         print("  help              - Show this help")
         print("  quit/exit         - Exit the CLI\n")
     
-    def _primes(self, args: List[str]):
+    def _primes(self, args: List[str]) -> None:
         """Generate prime numbers."""
         if not args:
             print("Usage: primes <n>")
@@ -150,7 +150,7 @@ class EternalMathCLI:
         except ValueError:
             print("Please enter a valid integer.\n")
     
-    def _fibonacci(self, args: List[str]):
+    def _fibonacci(self, args: List[str]) -> None:
         """Generate Fibonacci sequence."""
         if not args:
             print("Usage: fibonacci <n>")
@@ -175,7 +175,7 @@ class EternalMathCLI:
         except ValueError:
             print("Please enter a valid integer.\n")
     
-    def _perfect_numbers(self, args: List[str]):
+    def _perfect_numbers(self, args: List[str]) -> None:
         """Find perfect numbers."""
         if not args:
             print("Usage: perfect <n>")
@@ -203,7 +203,7 @@ class EternalMathCLI:
         except ValueError:
             print("Please enter a valid integer.\n")
     
-    def _twin_primes(self, args: List[str]):
+    def _twin_primes(self, args: List[str]) -> None:
         """Find twin prime pairs."""
         if not args:
             print("Usage: twins <n>")
@@ -224,7 +224,7 @@ class EternalMathCLI:
         except ValueError:
             print("Please enter a valid integer.\n")
     
-    def _goldbach(self, args: List[str]):
+    def _goldbach(self, args: List[str]) -> None:
         """Verify Goldbach conjecture."""
         if not args:
             print("Usage: goldbach <n>")
@@ -245,7 +245,7 @@ class EternalMathCLI:
         except ValueError:
             print("Please enter a valid integer.\n")
     
-    def _euler_totient(self, args: List[str]):
+    def _euler_totient(self, args: List[str]) -> None:
         """Calculate Euler's totient function."""
         if not args:
             print("Usage: euler <n>")
@@ -266,7 +266,7 @@ class EternalMathCLI:
         except ValueError:
             print("Please enter a valid integer.\n")
     
-    def _collatz(self, args: List[str]):
+    def _collatz(self, args: List[str]) -> None:
         """Generate Collatz sequence."""
         if not args:
             print("Usage: collatz <n>")
@@ -287,7 +287,7 @@ class EternalMathCLI:
         except ValueError:
             print("Please enter a valid integer.\n")
     
-    def _chinese_remainder(self, args: List[str]):
+    def _chinese_remainder(self, args: List[str]) -> None:
         """Solve Chinese Remainder Theorem."""
         if not args:
             print("Usage: crt <a1,n1,a2,n2>")
@@ -314,7 +314,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error solving CRT: {e}\n")
     
-    def _show_theorem(self, args: List[str]):
+    def _show_theorem(self, args: List[str]) -> None:
         """Display the Fundamental Theorem of Arithmetic."""
         theorem = create_fundamental_theorem_of_arithmetic()
         
@@ -332,7 +332,7 @@ class EternalMathCLI:
                 print(f"   {i}. {axiom.description}")
         print()
     
-    def _show_examples(self, args: List[str]):
+    def _show_examples(self, args: List[str]) -> None:
         """Show usage examples."""
         examples = [
             ("Find prime numbers", "primes 30"),
@@ -360,13 +360,13 @@ class EternalMathCLI:
             print(f"  {desc:.<30} {cmd}")
         print()
     
-    def _quit(self, args: List[str]):
+    def _quit(self, args: List[str]) -> None:
         """Exit the CLI."""
         print("\nGoodbye! Thanks for exploring mathematics! 👋\n")
         self.running = False
     
     # Symbolic Math Commands
-    def _simplify(self, args: List[str]):
+    def _simplify(self, args: List[str]) -> None:
         """Simplify a mathematical expression."""
         if not args:
             print("Usage: simplify <expression>")
@@ -381,7 +381,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error simplifying expression: {e}\n")
     
-    def _expand(self, args: List[str]):
+    def _expand(self, args: List[str]) -> None:
         """Expand a mathematical expression."""
         if not args:
             print("Usage: expand <expression>")
@@ -396,7 +396,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error expanding expression: {e}\n")
     
-    def _factor(self, args: List[str]):
+    def _factor(self, args: List[str]) -> None:
         """Factor a mathematical expression."""
         if not args:
             print("Usage: factor <expression>")
@@ -411,7 +411,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error factoring expression: {e}\n")
     
-    def _solve(self, args: List[str]):
+    def _solve(self, args: List[str]) -> None:
         """Solve an equation."""
         if not args:
             print("Usage: solve <equation> [variable]")
@@ -435,7 +435,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error solving equation: {e}\n")
     
-    def _differentiate(self, args: List[str]):
+    def _differentiate(self, args: List[str]) -> None:
         """Differentiate an expression."""
         if len(args) < 2:
             print("Usage: diff <expression> <variable>")
@@ -452,7 +452,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error differentiating expression: {e}\n")
     
-    def _integrate(self, args: List[str]):
+    def _integrate(self, args: List[str]) -> None:
         """Integrate an expression."""
         if len(args) < 2:
             print("Usage: integrate <expression> <variable>")
@@ -469,7 +469,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error integrating expression: {e}\n")
     
-    def _limit(self, args: List[str]):
+    def _limit(self, args: List[str]) -> None:
         """Compute a limit."""
         if len(args) < 3:
             print("Usage: limit <expression> <variable> <point>")
@@ -488,7 +488,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error computing limit: {e}\n")
     
-    def _taylor_series(self, args: List[str]):
+    def _taylor_series(self, args: List[str]) -> None:
         """Compute Taylor series."""
         if len(args) < 2:
             print("Usage: taylor <expression> <variable> [point] [order]")
@@ -511,7 +511,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error computing Taylor series: {e}\n")
     
-    def _substitute(self, args: List[str]):
+    def _substitute(self, args: List[str]) -> None:
         """Substitute values into an expression."""
         if len(args) < 2:
             print("Usage: substitute <expression> <var=value> [var2=value2]")
@@ -520,7 +520,7 @@ class EternalMathCLI:
         
         try:
             expr = args[0]
-            substitutions = {}
+            substitutions: Dict[str, Any] = {}
             
             for sub in args[1:]:
                 if '=' not in sub:
@@ -541,7 +541,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error substituting values: {e}\n")
 
-    def _plot_function(self, args: List[str]):
+    def _plot_function(self, args: List[str]) -> None:
         """Plot a mathematical function."""
         if not args:
             print("Usage: plot <expression>")
@@ -574,7 +574,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error plotting function: {e}\n")
 
-    def _plot_sequence(self, args: List[str]):
+    def _plot_sequence(self, args: List[str]) -> None:
         """Plot a mathematical sequence."""
         if len(args) < 2:
             print("Usage: plotseq <type> <n>")
@@ -599,7 +599,7 @@ class EternalMathCLI:
             
             print(f"\n📊 Plotting {seq_type} sequence...")
             success = self.visualizer.plot_sequence(
-                sequence,
+                [float(x) for x in sequence],
                 title=title
             )
             
@@ -613,7 +613,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error plotting sequence: {e}\n")
 
-    def _plot_primes(self, args: List[str]):
+    def _plot_primes(self, args: List[str]) -> None:
         """Plot prime number distribution."""
         if not args:
             print("Usage: plotprimes <n>")
@@ -642,7 +642,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error plotting primes: {e}\n")
 
-    def _plot_collatz(self, args: List[str]):
+    def _plot_collatz(self, args: List[str]) -> None:
         """Plot Collatz sequence trajectories."""
         if not args:
             print("Usage: plotcollatz <n1,n2,n3,...>")
@@ -682,7 +682,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error plotting Collatz sequences: {e}\n")
 
-    def _plot_comparative(self, args: List[str]):
+    def _plot_comparative(self, args: List[str]) -> None:
         """Plot comparative sequences."""
         if len(args) < 3:
             print("Usage: plotcomp <type1> <type2> <n>")
@@ -699,15 +699,15 @@ class EternalMathCLI:
             # Generate sequences based on types
             for seq_type in [type1, type2]:
                 if seq_type == 'fibonacci':
-                    sequences['Fibonacci'] = fibonacci_sequence(min(n, 15))
+                    sequences['Fibonacci'] = [float(x) for x in fibonacci_sequence(min(n, 15))]
                 elif seq_type == 'primes':
                     primes = sieve_of_eratosthenes(n * 10)  # Get more primes
-                    sequences['Primes'] = primes[:min(n, 15)]
+                    sequences['Primes'] = [float(x) for x in primes[:min(n, 15)]]
                 elif seq_type == 'euler':
-                    sequences['Euler φ(n)'] = [euler_totient(i) for i in range(1, min(n, 15) + 1)]
+                    sequences['Euler φ(n)'] = [float(euler_totient(i)) for i in range(1, min(n, 15) + 1)]
                 elif seq_type == 'collatz':
                     # Use length of Collatz sequences
-                    sequences['Collatz Steps'] = [len(collatz_sequence(i)) for i in range(1, min(n, 15) + 1)]
+                    sequences['Collatz Steps'] = [float(len(collatz_sequence(i))) for i in range(1, min(n, 15) + 1)]
                 else:
                     print(f"Unknown sequence type: {seq_type}")
                     return
@@ -732,7 +732,7 @@ class EternalMathCLI:
         except Exception as e:
             print(f"Error plotting comparative sequences: {e}\n")
     
-    def _benchmark(self, args: List[str]):
+    def _benchmark(self, args: List[str]) -> None:
         """Run performance benchmarks."""
         if args and args[0] == 'full':
             print("\n⏱️ Running comprehensive performance benchmarks...")
@@ -766,7 +766,7 @@ class EternalMathCLI:
                 print(f"❌ Benchmark failed: {e}")
 
 
-def main():
+def main() -> None:
     """Entry point for the CLI."""
     cli = EternalMathCLI()
     cli.run()

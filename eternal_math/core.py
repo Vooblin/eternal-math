@@ -3,33 +3,33 @@ Core mathematical utilities and data structures for Eternal Math.
 """
 
 import numpy as np
-from typing import List, Union, Callable, Any
+from typing import List, Union, Callable, Any, Optional
 
 
 class MathematicalObject:
     """Base class for all mathematical objects in the system."""
     
-    def __init__(self, name: str = None):
+    def __init__(self, name: Optional[str] = None):
         self.name = name
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.name or 'unnamed'})"
 
 
 class Set(MathematicalObject):
     """Mathematical set implementation."""
     
-    def __init__(self, elements: List[Any] = None, name: str = None):
+    def __init__(self, elements: Optional[List[Any]] = None, name: Optional[str] = None):
         super().__init__(name)
         self.elements = list(set(elements or []))
     
-    def __contains__(self, item):
+    def __contains__(self, item: Any) -> bool:
         return item in self.elements
     
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.elements)
     
-    def __iter__(self):
+    def __iter__(self) -> Any:
         return iter(self.elements)
     
     def union(self, other: 'Set') -> 'Set':
@@ -48,13 +48,13 @@ class Set(MathematicalObject):
 class Function(MathematicalObject):
     """Mathematical function representation."""
     
-    def __init__(self, func: Callable, domain: Set = None, codomain: Set = None, name: str = None):
+    def __init__(self, func: Callable, domain: Optional[Set] = None, codomain: Optional[Set] = None, name: Optional[str] = None):
         super().__init__(name)
         self.func = func
         self.domain = domain
         self.codomain = codomain
     
-    def __call__(self, x):
+    def __call__(self, x: Any) -> Any:
         if self.domain and x not in self.domain:
             raise ValueError(f"{x} is not in the domain {self.domain}")
         return self.func(x)

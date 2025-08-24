@@ -13,18 +13,18 @@ class Statement(ABC):
         self.description = description
     
     @abstractmethod
-    def evaluate(self, context: Dict[str, Any] = None) -> bool:
+    def evaluate(self, context: Optional[Dict[str, Any]] = None) -> bool:
         """Evaluate the truth value of the statement."""
         pass
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Statement({self.description})"
 
 
 class Axiom(Statement):
     """A mathematical axiom - a statement assumed to be true."""
     
-    def evaluate(self, context: Dict[str, Any] = None) -> bool:
+    def evaluate(self, context: Optional[Dict[str, Any]] = None) -> bool:
         return True  # Axioms are always true by definition
 
 
@@ -36,28 +36,28 @@ class Theorem(Statement):
         self.proof = proof
         self.proven = proof is not None
     
-    def evaluate(self, context: Dict[str, Any] = None) -> bool:
+    def evaluate(self, context: Optional[Dict[str, Any]] = None) -> bool:
         return self.proven and (self.proof.verify() if self.proof else False)
 
 
 class Proof:
     """A mathematical proof consisting of steps and logical deductions."""
     
-    def __init__(self, theorem: Theorem, steps: List['ProofStep'] = None):
+    def __init__(self, theorem: Theorem, steps: Optional[List['ProofStep']] = None):
         self.theorem = theorem
         self.steps = steps or []
-        self.axioms = []
-        self.assumptions = []
+        self.axioms: List[Axiom] = []
+        self.assumptions: List[Statement] = []
     
-    def add_step(self, step: 'ProofStep'):
+    def add_step(self, step: 'ProofStep') -> None:
         """Add a proof step."""
         self.steps.append(step)
     
-    def add_axiom(self, axiom: Axiom):
+    def add_axiom(self, axiom: Axiom) -> None:
         """Add an axiom to the proof."""
         self.axioms.append(axiom)
     
-    def add_assumption(self, assumption: Statement):
+    def add_assumption(self, assumption: Statement) -> None:
         """Add an assumption to the proof."""
         self.assumptions.append(assumption)
     
@@ -135,8 +135,8 @@ class EqualityStatement(Statement):
         self.right = right
         super().__init__(f"{left} = {right}")
     
-    def evaluate(self, context: Dict[str, Any] = None) -> bool:
-        return self.left == self.right
+    def evaluate(self, context: Optional[Dict[str, Any]] = None) -> bool:
+        return bool(self.left == self.right)
 
 
 class InequalityStatement(Statement):
@@ -148,15 +148,15 @@ class InequalityStatement(Statement):
         self.operator = operator
         super().__init__(f"{left} {operator} {right}")
     
-    def evaluate(self, context: Dict[str, Any] = None) -> bool:
+    def evaluate(self, context: Optional[Dict[str, Any]] = None) -> bool:
         if self.operator == "<":
-            return self.left < self.right
+            return bool(self.left < self.right)
         elif self.operator == ">":
-            return self.left > self.right
+            return bool(self.left > self.right)
         elif self.operator == "<=":
-            return self.left <= self.right
+            return bool(self.left <= self.right)
         elif self.operator == ">=":
-            return self.left >= self.right
+            return bool(self.left >= self.right)
         return False
 
 
@@ -167,7 +167,7 @@ class LogicalStatement(Statement):
         self.truth_value = truth_value
         super().__init__(description)
     
-    def evaluate(self, context: Dict[str, Any] = None) -> bool:
+    def evaluate(self, context: Optional[Dict[str, Any]] = None) -> bool:
         return self.truth_value
 
 

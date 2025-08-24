@@ -7,7 +7,7 @@ sequences, and concepts using matplotlib.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import List, Tuple, Callable, Optional
+from typing import List, Tuple, Callable, Optional, Dict, Any
 import sympy as sp
 from sympy import lambdify
 import os
@@ -74,7 +74,7 @@ class MathVisualizer:
             return False
     
     def plot_sequence(self, sequence: List[float], title: Optional[str] = None, 
-                     x_labels: Optional[List[str]] = None, save_path: Optional[str] = None) -> bool:
+                     x_labels: Optional[List[float]] = None, save_path: Optional[str] = None) -> bool:
         """
         Plot a mathematical sequence.
         
@@ -240,7 +240,7 @@ class MathVisualizer:
             print(f"Error plotting Collatz trajectories: {e}")
             return False
     
-    def plot_comparative_sequences(self, sequences_dict: dict, title: Optional[str] = None,
+    def plot_comparative_sequences(self, sequences_dict: Dict[str, List[float]], title: Optional[str] = None,
                                   save_path: Optional[str] = None) -> bool:
         """
         Plot multiple sequences for comparison.
@@ -289,7 +289,7 @@ class MathVisualizer:
             print(f"Error plotting comparative sequences: {e}")
             return False
 
-def create_output_directory():
+def create_output_directory() -> str:
     """Create output directory for saving plots."""
     output_dir = "math_plots"
     if not os.path.exists(output_dir):
