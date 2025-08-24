@@ -11,10 +11,18 @@ from .proofs import Axiom, LogicalStatement, Proof, ProofStep, Theorem
 def sieve_of_eratosthenes(limit: int) -> List[int]:
     """
     Generate all prime numbers up to a given limit using the Sieve of Eratosthenes.
+
+    For limits > 1,000,000, automatically uses segmented sieve for better memory
+     efficiency.
     """
     if limit < 2:
         return []
 
+    # Use segmented sieve for large limits for better memory efficiency
+    if limit > 1_000_000:
+        return _segmented_sieve(limit)
+
+    # Standard sieve for smaller limits
     sieve = [True] * (limit + 1)
     sieve[0] = sieve[1] = False
 
@@ -24,6 +32,53 @@ def sieve_of_eratosthenes(limit: int) -> List[int]:
                 sieve[j] = False
 
     return [i for i in range(2, limit + 1) if sieve[i]]
+
+
+def _segmented_sieve(limit: int) -> List[int]:
+    """
+    Segmented Sieve of Eratosthenes for memory-efficient prime generation.
+    Uses O(sqrt(n)) memory instead of O(n).
+    """
+    import math
+
+    sqrt_limit = int(math.sqrt(limit))
+
+    # Generate primes up to sqrt(limit) using standard sieve
+    base_primes = []
+    if sqrt_limit >= 2:
+        sieve = [True] * (sqrt_limit + 1)
+        sieve[0] = sieve[1] = False
+
+        for i in range(2, int(sqrt_limit**0.5) + 1):
+            if sieve[i]:
+                for j in range(i * i, sqrt_limit + 1, i):
+                    sieve[j] = False
+
+        base_primes = [i for i in range(2, sqrt_limit + 1) if sieve[i]]
+
+    # Process segments
+    segment_size = max(sqrt_limit, 32768)  # At least 32KB segments
+    primes = base_primes[:]
+
+    for segment_start in range(sqrt_limit + 1, limit + 1, segment_size):
+        segment_end = min(segment_start + segment_size - 1, limit)
+        segment = [True] * (segment_end - segment_start + 1)
+
+        for prime in base_primes:
+            # Find first multiple of prime in this segment
+            start = max(prime * prime, (segment_start + prime - 1) // prime * prime)
+
+            for multiple in range(start, segment_end + 1, prime):
+                segment[multiple - segment_start] = False
+
+        # Collect primes from this segment
+        for i in range(len(segment)):
+            if segment[i]:
+                candidate = segment_start + i
+                if candidate > sqrt_limit:  # Avoid duplicates
+                    primes.append(candidate)
+
+    return primes
 
 
 def fibonacci(n: int) -> int:
@@ -56,18 +111,62 @@ def fibonacci_sequence(count: int) -> List[int]:
 def is_perfect_number(n: int) -> bool:
     """
     Check if a number is a perfect number (sum of proper divisors equals the number).
+    Optimized algorithm with early termination.
     """
     if n <= 1:
         return False
 
+    # Even perfect numbers are of the form 2^(p-1) * (2^p - 1) where 2^p - 1 is prime
+    # This optimization handles Mersenne-based perfect numbers efficiently
+    if n % 2 == 0:
+        # Check if n = 2^(p-1) * (2^p - 1) for some prime p
+        temp = n
+        power_of_2 = 0
+        while temp % 2 == 0:
+            temp //= 2
+            power_of_2 += 1
+
+        if power_of_2 > 0:
+            mersenne_candidate = temp
+            expected_mersenne = (1 << (power_of_2 + 1)) - 1
+
+            if mersenne_candidate == expected_mersenne and _is_prime(
+                mersenne_candidate
+            ):
+                return True
+
+    # General case with optimized divisor sum calculation
     divisor_sum = 1  # 1 is always a proper divisor
-    for i in range(2, int(n**0.5) + 1):
+    sqrt_n = int(n**0.5)
+
+    for i in range(2, sqrt_n + 1):
         if n % i == 0:
             divisor_sum += i
-            if i != n // i:  # Avoid double-counting square roots
-                divisor_sum += n // i
+            complement = n // i
+            if i != complement:  # Avoid double-counting perfect squares
+                divisor_sum += complement
+
+            # Early termination if sum already exceeds n
+            if divisor_sum > n:
+                return False
 
     return divisor_sum == n
+
+
+def _is_prime(n: int) -> bool:
+    """Fast primality test for moderate-sized numbers."""
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+
+    # Check odd divisors up to sqrt(n)
+    for i in range(3, int(n**0.5) + 1, 2):
+        if n % i == 0:
+            return False
+    return True
 
 
 def euler_totient(n: int) -> int:

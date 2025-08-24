@@ -133,6 +133,7 @@ class EternalMathCLI:
         print("  plotcomp <type1> <type2> <n> - Compare sequences")
         print("\n⏱️ Performance:")
         print("  benchmark         - Run quick performance benchmarks")
+        print("  benchmark comparison [n] - Compare algorithm implementations")
         print("  benchmark full    - Run comprehensive benchmark suite")
         print("\n❓ General:")
         print("  examples          - Show usage examples")
@@ -752,7 +753,41 @@ class EternalMathCLI:
 
     def _benchmark(self, args: List[str]) -> None:
         """Run performance benchmarks."""
-        if args and args[0] == "full":
+        if args and args[0] == "comparison":
+            # Run algorithm comparison benchmark
+            limit = int(args[1]) if len(args) > 1 else 100_000
+            print(f"\n⚡ Running algorithm comparison benchmarks (n={limit:,})...")
+            try:
+                benchmark = PerformanceBenchmark()
+                results = benchmark.benchmark_algorithm_comparison(limit)
+
+                print("\n📊 Performance Comparison Results:")
+                print("=" * 60)
+
+                for impl_name, data in results.items():
+                    if impl_name == "performance_improvement":
+                        continue
+                    print(f"\n{data['algorithm']}:")
+                    print(f"  Average time: {data['mean_time']:.4f}s")
+                    print(f"  Std deviation: {data['std_dev']:.4f}s")
+                    print(f"  Min time: {data['min_time']:.4f}s")
+                    print(f"  Max time: {data['max_time']:.4f}s")
+
+                if "performance_improvement" in results:
+                    improvement = results["performance_improvement"]
+                    print("\n🚀 Performance Improvement:")
+                    print(f"  Speedup: {improvement['speedup_factor']:.2f}x faster")
+                    print(f"  Improvement: {improvement['percentage']:.1f}%")
+
+                print(
+                    "\nTip: Try 'benchmark comparison 2000000' for segmented sieve"
+                    " comparison"
+                )
+
+            except Exception as e:
+                print(f"❌ Benchmark failed: {e}")
+
+        elif args and args[0] == "full":
             print("\n⏱️ Running comprehensive performance benchmarks...")
             print("This may take a moment...\n")
             try:
@@ -781,6 +816,11 @@ class EternalMathCLI:
 
                 print("\n📈 Quick Benchmark Results:")
                 print(benchmark.generate_performance_report())
+                print(
+                    "\nTip: Use 'benchmark comparison' for algorithm optimization"
+                    " comparison"
+                )
+                print("     Use 'benchmark full' for comprehensive analysis")
 
             except Exception as e:
                 print(f"❌ Benchmark failed: {e}")

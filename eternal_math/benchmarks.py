@@ -318,6 +318,104 @@ class PerformanceBenchmark:
 
         print(f"Benchmark results saved to: {filename}")
 
+    def benchmark_algorithm_comparison(self, limit: int = 100_000) -> Dict[str, Any]:
+        """
+        Benchmark comparison between different implementations of the same algorithm.
+
+        Args:
+            limit: Upper limit for algorithm testing
+
+        Returns:
+            Dictionary containing performance comparison results
+        """
+        results: Dict[str, Dict[str, Any]] = {}
+
+        # Compare sieve implementations
+        print(f"🔄 Comparing sieve implementations up to {limit:,}...")
+
+        # Standard sieve (force standard implementation)
+        from eternal_math.number_theory import _segmented_sieve
+
+        standard_times = []
+        for _ in range(3):
+            start_time = time.perf_counter()
+            # Use standard sieve logic directly
+            if limit >= 2:
+                sieve = [True] * (limit + 1)
+                sieve[0] = sieve[1] = False
+                for i in range(2, int(limit**0.5) + 1):
+                    if sieve[i]:
+                        for j in range(i * i, limit + 1, i):
+                            sieve[j] = False
+                [i for i in range(2, limit + 1) if sieve[i]]
+            end_time = time.perf_counter()
+            standard_times.append(end_time - start_time)
+
+        # Optimized implementation
+        optimized_times = []
+        for _ in range(3):
+            start_time = time.perf_counter()
+            sieve_of_eratosthenes(limit)
+            end_time = time.perf_counter()
+            optimized_times.append(end_time - start_time)
+
+        # Segmented sieve (for larger numbers)
+        if limit > 1_000_000:
+            segmented_times = []
+            for _ in range(3):
+                start_time = time.perf_counter()
+                _segmented_sieve(limit)
+                end_time = time.perf_counter()
+                segmented_times.append(end_time - start_time)
+
+            results["segmented_sieve"] = {
+                "mean_time": statistics.mean(segmented_times),
+                "std_dev": (
+                    statistics.stdev(segmented_times) if len(segmented_times) > 1 else 0
+                ),
+                "min_time": min(segmented_times),
+                "max_time": max(segmented_times),
+                "algorithm": "Segmented Sieve of Eratosthenes",
+            }
+
+        results["standard_sieve"] = {
+            "mean_time": statistics.mean(standard_times),
+            "std_dev": (
+                statistics.stdev(standard_times) if len(standard_times) > 1 else 0
+            ),
+            "min_time": min(standard_times),
+            "max_time": max(standard_times),
+            "algorithm": "Standard Sieve of Eratosthenes",
+        }
+
+        results["optimized_sieve"] = {
+            "mean_time": statistics.mean(optimized_times),
+            "std_dev": (
+                statistics.stdev(optimized_times) if len(optimized_times) > 1 else 0
+            ),
+            "min_time": min(optimized_times),
+            "max_time": max(optimized_times),
+            "algorithm": "Optimized Sieve (Auto-selects Implementation)",
+        }
+
+        # Calculate performance improvements
+        standard_mean = results["standard_sieve"]["mean_time"]
+        optimized_mean = results["optimized_sieve"]["mean_time"]
+
+        if standard_mean > 0:
+            improvement = ((standard_mean - optimized_mean) / standard_mean) * 100
+            results["performance_improvement"] = {
+                "percentage": improvement,
+                "speedup_factor": (
+                    standard_mean / optimized_mean
+                    if optimized_mean > 0
+                    else float("inf")
+                ),
+            }
+
+        print(f"✅ Algorithm comparison completed for limit {limit:,}")
+        return results
+
 
 def run_performance_analysis() -> PerformanceBenchmark:
     """Run a complete performance analysis of eternal-math algorithms."""
