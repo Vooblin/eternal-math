@@ -76,8 +76,8 @@ eternal-math> crt 2,3,3,5
    Solution: x ≡ 8 (mod 15)
 
 eternal-math> theorem
-📜 Every integer greater than 1 either is prime itself or is the product of prime numbers,
- and this product is unique up to the order of factors.
+📜 Every integer greater than 1 either is prime itself or is the product of prime
+ numbers, and this product is unique up to the order of factors.
 
 🎓 Status: Proven ✅
 
@@ -89,7 +89,9 @@ eternal-math> theorem
 🔍 Axioms:
    1. Every integer n > 1 has a smallest divisor d > 1
    2. If d is the smallest divisor of n > 1, then d is prime
-   3. If n = p1^a1 * p2^a2 * ... * pk^ak and n = q1^b1 * q2^b2 * ... * qm^bm where all p_i and q_j are prime, then k = m and the multisets {p1, p2, ..., pk} and {q1, q2, ..., qm} are identical
+   3. If n = p1^a1 * p2^a2 * ... * pk^ak and n = q1^b1 * q2^b2 * ... * qm^bm where all
+      p_i and q_j are prime, then k = m and the multisets {p1, p2, ..., pk} and
+      {q1, q2, ..., qm} are identical
 
 eternal-math> examples
 💡 Usage Examples:

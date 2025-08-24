@@ -34,7 +34,7 @@ def main():
             if step.premises:
                 print(f"    Based on: {len(step.premises)} premise(s)")
 
-        print(f"\nPROOF VERIFICATION:")
+        print("\nPROOF VERIFICATION:")
         verification_result = theorem.proof.verify()
         print(f"  All steps valid: {verification_result}")
         print(f"  Logical structure: {'Sound' if verification_result else 'Unsound'}")

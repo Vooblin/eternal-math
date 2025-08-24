@@ -2,9 +2,7 @@
 Tests for the CLI functionality.
 """
 
-import sys
 import unittest
-from io import StringIO
 from unittest.mock import MagicMock, patch
 
 from eternal_math.cli import EternalMathCLI
@@ -174,10 +172,6 @@ class TestEternalMathCLI(unittest.TestCase):
     def test_chinese_remainder_command(self, mock_print):
         """Test Chinese Remainder Theorem command."""
         self.cli._chinese_remainder(["2,3,2,3"])
-        mock_print.assert_called()
-        calls = [str(call) for call in mock_print.call_args_list]
-        output = " ".join(calls)
-        # Should show the result
         self.assertTrue(mock_print.called)
 
     @patch("builtins.print")
@@ -320,10 +314,6 @@ class TestEternalMathCLI(unittest.TestCase):
     def test_taylor_series_command(self, mock_print):
         """Test Taylor series command."""
         self.cli._taylor_series(["exp(x)", "x", "0", "3"])
-        mock_print.assert_called()
-        calls = [str(call) for call in mock_print.call_args_list]
-        output = " ".join(calls)
-        # Should contain Taylor series expansion
         self.assertTrue(mock_print.called)
 
     @patch("builtins.print")
@@ -362,9 +352,6 @@ class TestEternalMathCLI(unittest.TestCase):
         mock_visualizer.return_value = mock_viz_instance
 
         self.cli._plot_function(["sin(x)"])
-        mock_print.assert_called()
-        calls = [str(call) for call in mock_print.call_args_list]
-        output = " ".join(calls)
         self.assertTrue(mock_print.called)
 
     @patch("builtins.print")
@@ -380,9 +367,6 @@ class TestEternalMathCLI(unittest.TestCase):
     def test_plot_sequence_command(self, mock_print):
         """Test plot sequence command."""
         self.cli._plot_sequence(["fibonacci", "10"])
-        mock_print.assert_called()
-        calls = [str(call) for call in mock_print.call_args_list]
-        output = " ".join(calls)
         self.assertTrue(mock_print.called)
 
     @patch("builtins.print")
@@ -398,9 +382,6 @@ class TestEternalMathCLI(unittest.TestCase):
     def test_plot_primes_command(self, mock_print):
         """Test plot primes command."""
         self.cli._plot_primes(["50"])
-        mock_print.assert_called()
-        calls = [str(call) for call in mock_print.call_args_list]
-        output = " ".join(calls)
         self.assertTrue(mock_print.called)
 
     @patch("builtins.print")
@@ -416,9 +397,6 @@ class TestEternalMathCLI(unittest.TestCase):
     def test_plot_collatz_command(self, mock_print):
         """Test plot Collatz command."""
         self.cli._plot_collatz(["7"])
-        mock_print.assert_called()
-        calls = [str(call) for call in mock_print.call_args_list]
-        output = " ".join(calls)
         self.assertTrue(mock_print.called)
 
     @patch("builtins.print")
@@ -434,9 +412,6 @@ class TestEternalMathCLI(unittest.TestCase):
     def test_plot_comparative_command(self, mock_print):
         """Test plot comparative command."""
         self.cli._plot_comparative(["fibonacci", "primes", "10"])
-        mock_print.assert_called()
-        calls = [str(call) for call in mock_print.call_args_list]
-        output = " ".join(calls)
         self.assertTrue(mock_print.called)
 
     @patch("builtins.print")
@@ -453,9 +428,6 @@ class TestEternalMathCLI(unittest.TestCase):
     def test_benchmark_command(self, mock_print):
         """Test benchmark command."""
         self.cli._benchmark(["primes", "100"])
-        mock_print.assert_called()
-        calls = [str(call) for call in mock_print.call_args_list]
-        output = " ".join(calls)
         self.assertTrue(mock_print.called)
 
     @patch("builtins.print")

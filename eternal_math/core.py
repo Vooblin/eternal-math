@@ -2,9 +2,7 @@
 Core mathematical utilities and data structures for Eternal Math.
 """
 
-from typing import Any, Callable, List, Optional, Union
-
-import numpy as np
+from typing import Any, Callable, List, Optional
 
 
 class MathematicalObject:
@@ -79,7 +77,9 @@ class Function(MathematicalObject):
 
 
 def gcd(a: int, b: int) -> int:
-    """Calculate the greatest common divisor of two integers using Euclidean algorithm."""
+    """
+    Calculate the greatest common divisor of two integers using Euclidean algorithm.
+    """
     while b:
         a, b = b, a % b
     return abs(a)

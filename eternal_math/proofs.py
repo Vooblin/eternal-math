@@ -3,7 +3,7 @@ Mathematical proof system and logical frameworks.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 class Statement(ABC):

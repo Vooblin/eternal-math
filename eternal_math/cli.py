@@ -5,10 +5,9 @@ This module provides an interactive CLI for exploring mathematical concepts,
 running calculations, and examining proofs.
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from eternal_math import (
-    AlgebraUtils,
     CalculusUtils,
     MathVisualizer,
     NumberTheoryUtils,
@@ -21,11 +20,11 @@ from eternal_math import (
     fibonacci_sequence,
     gcd,
     is_perfect_number,
-    run_performance_analysis,
     sieve_of_eratosthenes,
     twin_primes,
     verify_goldbach_conjecture,
 )
+from eternal_math.benchmarks import run_performance_analysis
 
 
 class EternalMathCLI:
@@ -315,7 +314,7 @@ class EternalMathCLI:
             a1, n1, a2, n2 = map(int, params)
             result = NumberTheoryUtils.chinese_remainder_theorem([a1, a2], [n1, n2])
 
-            print(f"\n🧮 Chinese Remainder Theorem:")
+            print("\n🧮 Chinese Remainder Theorem:")
             print(f"   x ≡ {a1} (mod {n1})")
             print(f"   x ≡ {a2} (mod {n2})")
             print(f"   Solution: x ≡ {result} (mod {n1 * n2})\n")
@@ -333,14 +332,13 @@ class EternalMathCLI:
         print(f"\n🎓 Status: {'Proven ✅' if theorem.proven else 'Not proven ❌'}")
 
         if theorem.proof:
-            print(f"\n📋 Proof Structure:")
+            print("\n📋 Proof Structure:")
             print(f"   • Axioms used: {len(theorem.proof.axioms)}")
             print(f"   • Proof steps: {len(theorem.proof.steps)}")
-            print(
-                f"   • Verification: {'Valid ✅' if theorem.proof.verify() else 'Invalid ❌'}"
-            )
+            verification_status = "Valid ✅" if theorem.proof.verify() else "Invalid ❌"
+            print(f"   • Verification: {verification_status}")
 
-            print(f"\n🔍 Axioms:")
+            print("\n🔍 Axioms:")
             for i, axiom in enumerate(theorem.proof.axioms, 1):
                 print(f"   {i}. {axiom.description}")
         print()

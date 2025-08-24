@@ -56,9 +56,9 @@ def demo_function_plotting():
         )
 
         if success:
-            print(f"   ✅ Successfully plotted and saved!")
+            print("   ✅ Successfully plotted and saved!")
         else:
-            print(f"   ❌ Failed to plot function")
+            print("   ❌ Failed to plot function")
 
 
 def demo_sequence_visualization():
@@ -80,7 +80,7 @@ def demo_sequence_visualization():
         save_path=os.path.join(output_dir, "fibonacci_sequence.png"),
     )
     print(f"   Fibonacci sequence: {fib_seq[:10]}...")
-    print(f"   ✅ Plot saved!" if success else "   ❌ Plot failed!")
+    print("   ✅ Plot saved!" if success else "   ❌ Plot failed!")
 
     # 2. Prime numbers visualization
     print("\n2. Prime Numbers Distribution")
@@ -91,7 +91,7 @@ def demo_sequence_visualization():
     )
     print(f"   Found {len(primes)} primes up to 100")
     print(f"   First 10 primes: {primes[:10]}")
-    print(f"   ✅ Plot saved!" if success else "   ❌ Plot failed!")
+    print("   ✅ Plot saved!" if success else "   ❌ Plot failed!")
 
     # 3. Euler's totient function
     print("\n3. Euler's Totient Function φ(n)")
@@ -103,7 +103,7 @@ def demo_sequence_visualization():
         save_path=os.path.join(output_dir, "euler_totient.png"),
     )
     print(f"   φ(n) values: {totients}")
-    print(f"   ✅ Plot saved!" if success else "   ❌ Plot failed!")
+    print("   ✅ Plot saved!" if success else "   ❌ Plot failed!")
 
 
 def demo_collatz_trajectories():
@@ -130,7 +130,7 @@ def demo_collatz_trajectories():
         save_path=os.path.join(output_dir, "collatz_trajectories.png"),
     )
 
-    print(f"\n   ✅ Collatz plot saved!" if success else "   ❌ Plot failed!")
+    print("\n   ✅ Collatz plot saved!" if success else "   ❌ Plot failed!")
     print("   Note: All sequences eventually reach 1 (conjecture holds)")
 
 
@@ -163,7 +163,7 @@ def demo_comparative_analysis():
         save_path=os.path.join(output_dir, "sequence_comparison.png"),
     )
 
-    print(f"\n   ✅ Comparative plot saved!" if success else "   ❌ Plot failed!")
+    print("\n   ✅ Comparative plot saved!" if success else "   ❌ Plot failed!")
 
 
 def main():

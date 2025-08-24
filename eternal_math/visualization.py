@@ -6,7 +6,7 @@ sequences, and concepts using matplotlib.
 """
 
 import os
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
