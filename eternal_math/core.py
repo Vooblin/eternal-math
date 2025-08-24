@@ -2,69 +2,80 @@
 Core mathematical utilities and data structures for Eternal Math.
 """
 
+from typing import Any, Callable, List, Optional, Union
+
 import numpy as np
-from typing import List, Union, Callable, Any, Optional
 
 
 class MathematicalObject:
     """Base class for all mathematical objects in the system."""
-    
+
     def __init__(self, name: Optional[str] = None):
         self.name = name
-    
+
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.name or 'unnamed'})"
 
 
 class Set(MathematicalObject):
     """Mathematical set implementation."""
-    
-    def __init__(self, elements: Optional[List[Any]] = None, name: Optional[str] = None):
+
+    def __init__(
+        self, elements: Optional[List[Any]] = None, name: Optional[str] = None
+    ):
         super().__init__(name)
         self.elements = list(set(elements or []))
-    
+
     def __contains__(self, item: Any) -> bool:
         return item in self.elements
-    
+
     def __len__(self) -> int:
         return len(self.elements)
-    
+
     def __iter__(self) -> Any:
         return iter(self.elements)
-    
-    def union(self, other: 'Set') -> 'Set':
+
+    def union(self, other: "Set") -> "Set":
         """Return the union of this set with another."""
         return Set(self.elements + other.elements)
-    
-    def intersection(self, other: 'Set') -> 'Set':
+
+    def intersection(self, other: "Set") -> "Set":
         """Return the intersection of this set with another."""
         return Set([x for x in self.elements if x in other])
-    
-    def difference(self, other: 'Set') -> 'Set':
+
+    def difference(self, other: "Set") -> "Set":
         """Return the difference of this set with another."""
         return Set([x for x in self.elements if x not in other])
 
 
 class Function(MathematicalObject):
     """Mathematical function representation."""
-    
-    def __init__(self, func: Callable, domain: Optional[Set] = None, codomain: Optional[Set] = None, name: Optional[str] = None):
+
+    def __init__(
+        self,
+        func: Callable,
+        domain: Optional[Set] = None,
+        codomain: Optional[Set] = None,
+        name: Optional[str] = None,
+    ):
         super().__init__(name)
         self.func = func
         self.domain = domain
         self.codomain = codomain
-    
+
     def __call__(self, x: Any) -> Any:
         if self.domain and x not in self.domain:
             raise ValueError(f"{x} is not in the domain {self.domain}")
         return self.func(x)
-    
-    def compose(self, other: 'Function') -> 'Function':
+
+    def compose(self, other: "Function") -> "Function":
         """Compose this function with another function."""
-        return Function(lambda x: self(other(x)), 
-                       other.domain, 
-                       self.codomain,
-                       f"({self.name} ∘ {other.name})" if self.name and other.name else None)
+        return Function(
+            lambda x: self(other(x)),
+            other.domain,
+            self.codomain,
+            f"({self.name} ∘ {other.name})" if self.name and other.name else None,
+        )
 
 
 def gcd(a: int, b: int) -> int:
@@ -87,7 +98,7 @@ def is_prime(n: int) -> bool:
         return True
     if n % 2 == 0:
         return False
-    
+
     for i in range(3, int(n**0.5) + 1, 2):
         if n % i == 0:
             return False
@@ -98,7 +109,7 @@ def prime_factorization(n: int) -> List[int]:
     """Return the prime factorization of a positive integer."""
     if n < 2:
         return []
-    
+
     factors = []
     d = 2
     while d * d <= n:
@@ -112,6 +123,11 @@ def prime_factorization(n: int) -> List[int]:
 
 
 __all__ = [
-    'MathematicalObject', 'Set', 'Function', 
-    'gcd', 'lcm', 'is_prime', 'prime_factorization'
+    "MathematicalObject",
+    "Set",
+    "Function",
+    "gcd",
+    "lcm",
+    "is_prime",
+    "prime_factorization",
 ]
