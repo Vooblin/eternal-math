@@ -3,9 +3,15 @@ Tests for the number theory module.
 """
 
 from eternal_math.number_theory import (
-    sieve_of_eratosthenes, fibonacci, fibonacci_sequence, is_perfect_number,
-    euler_totient, collatz_sequence, twin_primes, verify_goldbach_conjecture,
-    NumberTheoryUtils
+    NumberTheoryUtils,
+    collatz_sequence,
+    euler_totient,
+    fibonacci,
+    fibonacci_sequence,
+    is_perfect_number,
+    sieve_of_eratosthenes,
+    twin_primes,
+    verify_goldbach_conjecture,
 )
 
 
@@ -14,7 +20,7 @@ def test_sieve_of_eratosthenes():
     primes = sieve_of_eratosthenes(30)
     expected = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
     assert primes == expected
-    
+
     # Test edge cases
     assert sieve_of_eratosthenes(1) == []
     assert sieve_of_eratosthenes(2) == [2]
@@ -26,7 +32,7 @@ def test_fibonacci():
     assert fibonacci(1) == 1
     assert fibonacci(5) == 5
     assert fibonacci(10) == 55
-    
+
     # Test sequence generation
     seq = fibonacci_sequence(8)
     expected = [0, 1, 1, 2, 3, 5, 8, 13]
@@ -35,7 +41,7 @@ def test_fibonacci():
 
 def test_perfect_numbers():
     """Test perfect number detection."""
-    assert is_perfect_number(6) == True   # 1 + 2 + 3 = 6
+    assert is_perfect_number(6) == True  # 1 + 2 + 3 = 6
     assert is_perfect_number(28) == True  # 1 + 2 + 4 + 7 + 14 = 28
     assert is_perfect_number(12) == False
     assert is_perfect_number(1) == False
@@ -44,7 +50,7 @@ def test_perfect_numbers():
 def test_euler_totient():
     """Test Euler's totient function."""
     assert euler_totient(1) == 1
-    assert euler_totient(9) == 6   # φ(9) = 9 * (1 - 1/3) = 6
+    assert euler_totient(9) == 6  # φ(9) = 9 * (1 - 1/3) = 6
     assert euler_totient(10) == 4  # φ(10) = 10 * (1 - 1/2) * (1 - 1/5) = 4
 
 
@@ -53,7 +59,7 @@ def test_collatz_sequence():
     seq = collatz_sequence(3)
     expected = [3, 10, 5, 16, 8, 4, 2, 1]
     assert seq == expected
-    
+
     assert collatz_sequence(1) == [1]
     assert collatz_sequence(0) == []
 
