@@ -15,7 +15,7 @@ from eternal_math.number_theory import (
 )
 
 
-def test_sieve_of_eratosthenes():
+def test_sieve_of_eratosthenes() -> None:
     """Test the Sieve of Eratosthenes algorithm."""
     primes = sieve_of_eratosthenes(30)
     expected = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
@@ -26,7 +26,7 @@ def test_sieve_of_eratosthenes():
     assert sieve_of_eratosthenes(2) == [2]
 
 
-def test_fibonacci():
+def test_fibonacci() -> None:
     """Test Fibonacci number calculation."""
     assert fibonacci(0) == 0
     assert fibonacci(1) == 1
@@ -39,7 +39,7 @@ def test_fibonacci():
     assert seq == expected
 
 
-def test_perfect_numbers():
+def test_perfect_numbers() -> None:
     """Test perfect number detection."""
     assert is_perfect_number(6) is True  # 1 + 2 + 3 = 6
     assert is_perfect_number(28) is True  # 1 + 2 + 4 + 7 + 14 = 28
@@ -47,14 +47,14 @@ def test_perfect_numbers():
     assert is_perfect_number(1) is False
 
 
-def test_euler_totient():
+def test_euler_totient() -> None:
     """Test Euler's totient function."""
     assert euler_totient(1) == 1
     assert euler_totient(9) == 6  # φ(9) = 9 * (1 - 1/3) = 6
     assert euler_totient(10) == 4  # φ(10) = 10 * (1 - 1/2) * (1 - 1/5) = 4
 
 
-def test_collatz_sequence():
+def test_collatz_sequence() -> None:
     """Test Collatz sequence generation."""
     seq = collatz_sequence(3)
     expected = [3, 10, 5, 16, 8, 4, 2, 1]
@@ -64,20 +64,20 @@ def test_collatz_sequence():
     assert collatz_sequence(0) == []
 
 
-def test_twin_primes():
+def test_twin_primes() -> None:
     """Test twin prime detection."""
     twins = twin_primes(20)
     expected = [(3, 5), (5, 7), (11, 13), (17, 19)]
     assert twins == expected
 
 
-def test_goldbach_conjecture():
+def test_goldbach_conjecture() -> None:
     """Test Goldbach conjecture verification for small numbers."""
     # This should be true for small limits
     assert verify_goldbach_conjecture(100) is True
 
 
-def test_chinese_remainder_theorem():
+def test_chinese_remainder_theorem() -> None:
     """Test Chinese Remainder Theorem solver."""
     # System: x ≡ 2 (mod 3), x ≡ 3 (mod 5), x ≡ 2 (mod 7)
     # Solution: x ≡ 23 (mod 105)

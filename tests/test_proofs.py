@@ -19,13 +19,13 @@ from eternal_math.proofs import (
 class TestProofSystem:
     """Test the basic proof system components."""
 
-    def test_axiom_creation(self):
+    def test_axiom_creation(self) -> None:
         """Test axiom creation and evaluation."""
         axiom = Axiom("Every integer has a unique prime factorization")
         assert axiom.evaluate() is True
         assert "unique prime factorization" in axiom.description
 
-    def test_logical_statement(self):
+    def test_logical_statement(self) -> None:
         """Test logical statement creation and evaluation."""
         stmt_true = LogicalStatement("2 is prime", True)
         stmt_false = LogicalStatement("4 is prime", False)
@@ -35,7 +35,7 @@ class TestProofSystem:
         assert "2 is prime" in stmt_true.description
         assert "4 is prime" in stmt_false.description
 
-    def test_equality_statement(self):
+    def test_equality_statement(self) -> None:
         """Test equality statement evaluation."""
         eq_true = EqualityStatement(2 + 2, 4)
         eq_false = EqualityStatement(2 + 2, 5)
@@ -45,7 +45,7 @@ class TestProofSystem:
         assert "4 = 4" in eq_true.description
         assert "4 = 5" in eq_false.description
 
-    def test_inequality_statement(self):
+    def test_inequality_statement(self) -> None:
         """Test inequality statement evaluation."""
         ineq_lt = InequalityStatement(3, 5, "<")
         ineq_gt = InequalityStatement(7, 2, ">")
@@ -55,13 +55,13 @@ class TestProofSystem:
         assert ineq_gt.evaluate() is True
         assert ineq_false.evaluate() is False
 
-    def test_theorem_without_proof(self):
+    def test_theorem_without_proof(self) -> None:
         """Test theorem creation without proof."""
         theorem = Theorem("Pythagorean theorem")
         assert theorem.proven is False
         assert theorem.evaluate() is False
 
-    def test_theorem_with_proof(self):
+    def test_theorem_with_proof(self) -> None:
         """Test theorem creation with proof."""
         theorem = Theorem("Simple theorem")
         proof = Proof(theorem)
@@ -77,7 +77,7 @@ class TestProofSystem:
 class TestProofSteps:
     """Test proof step creation and verification."""
 
-    def test_proof_step_creation(self):
+    def test_proof_step_creation(self) -> None:
         """Test creating proof steps."""
         premise = LogicalStatement("P implies Q")
         conclusion = LogicalStatement("Q")
@@ -93,7 +93,7 @@ class TestProofSteps:
         assert step.rule == "Modus Ponens"
         assert "Basic logical inference" in step.justification
 
-    def test_proof_step_verification(self):
+    def test_proof_step_verification(self) -> None:
         """Test proof step verification logic."""
         premise = LogicalStatement("All men are mortal")
         conclusion = LogicalStatement("Socrates is mortal")
@@ -114,7 +114,7 @@ class TestProofSteps:
 class TestFundamentalTheoremProof:
     """Test the enhanced Fundamental Theorem of Arithmetic proof."""
 
-    def test_theorem_creation(self):
+    def test_theorem_creation(self) -> None:
         """Test that the theorem is properly created."""
         theorem = create_fundamental_theorem_of_arithmetic()
 
@@ -123,10 +123,11 @@ class TestFundamentalTheoremProof:
         assert theorem.proof is not None
         assert "product of prime numbers" in theorem.description
 
-    def test_proof_structure(self):
+    def test_proof_structure(self) -> None:
         """Test the proof structure and components."""
         theorem = create_fundamental_theorem_of_arithmetic()
         proof = theorem.proof
+        assert proof is not None
 
         # Check axioms
         assert len(proof.axioms) == 3
@@ -144,24 +145,26 @@ class TestFundamentalTheoremProof:
         assert "Proof by Contradiction Setup" in rules
         assert "Conjunction" in rules
 
-    def test_proof_verification(self):
+    def test_proof_verification(self) -> None:
         """Test that the proof can be verified."""
         theorem = create_fundamental_theorem_of_arithmetic()
         proof = theorem.proof
+        assert proof is not None
 
         # The proof should verify successfully
         assert proof.verify() is True
 
-    def test_proof_step_justifications(self):
+    def test_proof_step_justifications(self) -> None:
         """Test that all proof steps have justifications."""
         theorem = create_fundamental_theorem_of_arithmetic()
         proof = theorem.proof
+        assert proof is not None
 
         for i, step in enumerate(proof.steps):
             assert len(step.justification) > 0, f"Step {i+1} lacks justification"
             assert isinstance(step.justification, str)
 
-    def test_theorem_evaluation(self):
+    def test_theorem_evaluation(self) -> None:
         """Test that the theorem evaluates as true."""
         theorem = create_fundamental_theorem_of_arithmetic()
         assert theorem.evaluate() is True
@@ -170,7 +173,7 @@ class TestFundamentalTheoremProof:
 class TestProofIntegration:
     """Test integration between different proof components."""
 
-    def test_complete_proof_workflow(self):
+    def test_complete_proof_workflow(self) -> None:
         """Test a complete proof workflow from axioms to theorem."""
         # Create a simple theorem: "If P then Q, P is true, therefore Q is true"
         theorem = Theorem("Modus Ponens Example")

@@ -37,7 +37,7 @@ This project uses comprehensive type hints. Run type checking with:
 
 .. code-block:: bash
 
-    mypy eternal_math/
+    mypy eternal_math/ tests/ examples/
 
 Code Formatting
 ~~~~~~~~~~~~~~~

@@ -32,14 +32,12 @@ class SymbolicMath:
     """Main class for symbolic mathematical operations."""
 
     @staticmethod
-    def create_symbol(name: str, **assumptions: Dict[str, Any]) -> sp.Symbol:
+    def create_symbol(name: str, **assumptions: Any) -> sp.Symbol:
         """Create a symbolic variable with optional assumptions."""
         return symbols(name, **assumptions)
 
     @staticmethod
-    def create_symbols(
-        names: str, **assumptions: Dict[str, Any]
-    ) -> Tuple[sp.Symbol, ...]:
+    def create_symbols(names: str, **assumptions: Any) -> Tuple[sp.Symbol, ...]:
         """Create multiple symbolic variables."""
         return tuple(symbols(names, **assumptions))
 
@@ -76,7 +74,7 @@ class SymbolicMath:
 
     @staticmethod
     def solve_equation(
-        equation: Union[str, sp.Expr], variable: Union[str, sp.Symbol] = None
+        equation: Union[str, sp.Expr], variable: Optional[Union[str, sp.Symbol]] = None
     ) -> List[sp.Expr]:
         """Solve an equation for a variable."""
         if isinstance(equation, str):

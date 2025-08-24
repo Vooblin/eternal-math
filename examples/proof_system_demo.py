@@ -8,7 +8,7 @@ for the Fundamental Theorem of Arithmetic.
 from eternal_math import create_fundamental_theorem_of_arithmetic
 
 
-def main():
+def main() -> None:
     """Demonstrate the enhanced proof system capabilities."""
     print("=== Eternal Math: Enhanced Proof System ===\n")
 

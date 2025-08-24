@@ -28,7 +28,7 @@ This project uses comprehensive type hints throughout the codebase. We use mypy 
 
 Run type checking:
 ```bash
-mypy eternal_math/
+mypy eternal_math/ tests/ examples/
 ```
 
 ### Code Formatting
@@ -58,7 +58,7 @@ make lint  # if Makefile exists, or run commands individually:
 black --check eternal_math/ tests/ examples/
 isort --check-only eternal_math/ tests/ examples/
 flake8 eternal_math/ tests/ examples/
-mypy eternal_math/
+mypy eternal_math/ tests/ examples/
 pytest tests/
 ```
 
