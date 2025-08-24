@@ -49,6 +49,29 @@ cd eternal-math
 pip install -e .
 ```
 
+## Documentation
+
+Comprehensive documentation is available and includes:
+
+- **Quick Start Guide**: Get up and running quickly
+- **User Guides**: In-depth coverage of each module
+- **API Reference**: Complete documentation of all functions and classes  
+- **Examples**: Practical usage examples with code
+
+### Building Documentation Locally
+
+```bash
+# Install with documentation dependencies
+pip install -e .[dev]
+
+# Build the documentation
+cd docs/
+make html
+
+# View the documentation
+open build/index.html
+```
+
 ## Quick Start
 
 ### Interactive CLI
