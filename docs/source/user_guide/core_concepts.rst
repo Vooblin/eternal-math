@@ -3,6 +3,44 @@ Core Concepts
 
 This section covers the fundamental mathematical objects provided by Eternal Math.
 
+Mathematical Constants
+----------------------
+
+Eternal Math provides access to fundamental mathematical constants through the ``constants`` object:
+
+.. code-block:: python
+
+    from eternal_math import constants
+
+    # Basic constants
+    print(f"π = {constants.PI}")      # 3.141592653589793
+    print(f"e = {constants.E}")       # 2.718281828459045
+    print(f"τ = {constants.TAU}")     # 6.283185307179586 (2π)
+
+    # Golden ratio and related constants
+    print(f"φ = {constants.PHI}")           # 1.618033988749895
+    print(f"1/φ = {constants.PHI_INVERSE}") # 0.618033988749895
+
+    # Square roots and logarithms
+    print(f"√2 = {constants.SQRT_2}")   # 1.4142135623730951
+    print(f"√3 = {constants.SQRT_3}")   # 1.7320508075688772
+    print(f"ln(2) = {constants.LN_2}")  # 0.6931471805599453
+
+    # Special constants
+    print(f"γ = {constants.GAMMA}")     # 0.5772156649015329 (Euler-Mascheroni)
+
+Available constants include:
+
+* **PI** - The ratio of circumference to diameter (π)
+* **E** - The base of natural logarithm (e)
+* **TAU** - Twice pi, the ratio of circumference to radius (τ = 2π)
+* **PHI** - The golden ratio ((1 + √5)/2)
+* **PHI_INVERSE** - The reciprocal of the golden ratio
+* **GAMMA** - The Euler-Mascheroni constant
+* **SQRT_2, SQRT_3, SQRT_5** - Common square roots
+* **LN_2, LN_10** - Natural logarithms of 2 and 10
+* **INFINITY, NEG_INFINITY** - Positive and negative infinity
+
 Mathematical Sets
 -----------------
 

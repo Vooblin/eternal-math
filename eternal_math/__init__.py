@@ -22,6 +22,8 @@ from .visualization import *  # noqa: F403, F401
 # Define what gets imported with "from eternal_math import *"
 __all__ = [
     # Core objects and utilities
+    "Constants",
+    "constants",
     "MathematicalObject",
     "Set",
     "Function",
