@@ -2,14 +2,16 @@
 Number theory utilities and theorems.
 """
 
-from typing import Iterator, List, Tuple
+from typing import List, Tuple
 
-from .core import gcd, is_prime, prime_factorization
+from .core import gcd, prime_factorization
 from .proofs import Axiom, LogicalStatement, Proof, ProofStep, Theorem
 
 
 def sieve_of_eratosthenes(limit: int) -> List[int]:
-    """Generate all prime numbers up to a given limit using the Sieve of Eratosthenes."""
+    """
+    Generate all prime numbers up to a given limit using the Sieve of Eratosthenes.
+    """
     if limit < 2:
         return []
 
@@ -52,7 +54,9 @@ def fibonacci_sequence(count: int) -> List[int]:
 
 
 def is_perfect_number(n: int) -> bool:
-    """Check if a number is a perfect number (sum of proper divisors equals the number)."""
+    """
+    Check if a number is a perfect number (sum of proper divisors equals the number).
+    """
     if n <= 1:
         return False
 
@@ -67,7 +71,10 @@ def is_perfect_number(n: int) -> bool:
 
 
 def euler_totient(n: int) -> int:
-    """Calculate Euler's totient function φ(n) - count of integers up to n that are coprime to n."""
+    """
+    Calculate Euler's totient function φ(n) - count of integers up to n
+    that are coprime to n.
+    """
     if n == 1:
         return 1
 
@@ -97,7 +104,9 @@ def collatz_sequence(n: int) -> List[int]:
 
 
 def twin_primes(limit: int) -> List[Tuple[int, int]]:
-    """Find all twin prime pairs (p, p+2) where both are prime, up to the given limit."""
+    """
+    Find all twin prime pairs (p, p+2) where both are prime, up to the given limit.
+    """
     primes = sieve_of_eratosthenes(limit)
     prime_set = set(primes)
 
@@ -111,7 +120,10 @@ def twin_primes(limit: int) -> List[Tuple[int, int]]:
 
 # Number theory theorems
 def create_fundamental_theorem_of_arithmetic() -> Theorem:
-    """Create the Fundamental Theorem of Arithmetic as a theorem object with detailed proof steps."""
+    """
+    Create the Fundamental Theorem of Arithmetic as a theorem object with
+    detailed proof steps.
+    """
     description = (
         "Every integer greater than 1 either is prime itself "
         "or is the product of prime numbers, and this product is unique "
@@ -127,7 +139,9 @@ def create_fundamental_theorem_of_arithmetic() -> Theorem:
     axiom1 = Axiom("Every integer n > 1 has a smallest divisor d > 1")
     axiom2 = Axiom("If d is the smallest divisor of n > 1, then d is prime")
     axiom3 = Axiom(
-        "If n = p1^a1 * p2^a2 * ... * pk^ak and n = q1^b1 * q2^b2 * ... * qm^bm where all p_i and q_j are prime, then k = m and the multisets {p1, p2, ..., pk} and {q1, q2, ..., qm} are identical"
+        "If n = p1^a1 * p2^a2 * ... * pk^ak and n = q1^b1 * q2^b2 * ... * qm^bm "
+        "where all p_i and q_j are prime, then k = m and the multisets "
+        "{p1, p2, ..., pk} and {q1, q2, ..., qm} are identical"
     )
 
     proof.add_axiom(axiom1)
@@ -149,51 +163,71 @@ def create_fundamental_theorem_of_arithmetic() -> Theorem:
             "Let n > 1 be arbitrary. Either n is prime or n has a proper divisor"
         ),
         rule="Case Analysis",
-        justification="By definition, n is prime if it has no proper divisors, otherwise it has proper divisors",
+        justification=(
+            "By definition, n is prime if it has no proper divisors, "
+            "otherwise it has proper divisors"
+        ),
     )
 
     step2 = ProofStep(
         premises=[step1.conclusion, axiom2],
         conclusion=LogicalStatement(
-            "If n is composite, then n = d * (n/d) where d is the smallest prime divisor of n"
+            "If n is composite, then n = d * (n/d) where d is the smallest "
+            "prime divisor of n"
         ),
         rule="Division Property",
-        justification="If n has a proper divisor d, then n/d is also a divisor, and the smallest such d must be prime",
+        justification=(
+            "If n has a proper divisor d, then n/d is also a divisor, "
+            "and the smallest such d must be prime"
+        ),
     )
 
     step3 = ProofStep(
         premises=[step2.conclusion],
         conclusion=LogicalStatement(
-            "By strong induction, both d and n/d can be expressed as products of primes"
+            "By strong induction, both d and n/d can be expressed as "
+            "products of primes"
         ),
         rule="Strong Induction",
-        justification="Since d < n and n/d < n, by inductive hypothesis both have prime factorizations",
+        justification=(
+            "Since d < n and n/d < n, by inductive hypothesis both have "
+            "prime factorizations"
+        ),
     )
 
     step4 = ProofStep(
         premises=[step1.conclusion, step3.conclusion],
         conclusion=existence_stmt,
         rule="Inductive Construction",
-        justification="Base case: primes factor as themselves. Inductive step: composite n = d * (n/d) where both factors have prime factorizations",
+        justification=(
+            "Base case: primes factor as themselves. Inductive step: "
+            "composite n = d * (n/d) where both factors have prime factorizations"
+        ),
     )
 
     # Proof steps for uniqueness (by contradiction)
     step5 = ProofStep(
         premises=[existence_stmt],
         conclusion=LogicalStatement(
-            "Assume n has two different prime factorizations: n = p1 * p2 * ... * pk = q1 * q2 * ... * qm"
+            "Assume n has two different prime factorizations: "
+            "n = p1 * p2 * ... * pk = q1 * q2 * ... * qm"
         ),
         rule="Proof by Contradiction Setup",
-        justification="To prove uniqueness, assume the contrary and derive a contradiction",
+        justification=(
+            "To prove uniqueness, assume the contrary and derive a contradiction"
+        ),
     )
 
     step6 = ProofStep(
         premises=[step5.conclusion],
         conclusion=LogicalStatement(
-            "Since p1 divides the left side, p1 must divide some q_j on the right side"
+            "Since p1 divides the left side, p1 must divide some q_j "
+            "on the right side"
         ),
         rule="Divisibility Property",
-        justification="If a prime divides a product, it must divide at least one factor",
+        justification=(
+            "If a prime divides a product, it must divide at least one factor"
+        ),
     )
 
     step7 = ProofStep(
@@ -202,21 +236,30 @@ def create_fundamental_theorem_of_arithmetic() -> Theorem:
             "Since p1 and q_j are both prime and p1 divides q_j, we have p1 = q_j"
         ),
         rule="Prime Property",
-        justification="A prime number has no proper divisors, so if one prime divides another, they must be equal",
+        justification=(
+            "A prime number has no proper divisors, so if one prime divides "
+            "another, they must be equal"
+        ),
     )
 
     step8 = ProofStep(
         premises=[step7.conclusion],
         conclusion=uniqueness_stmt,
         rule="Inductive Cancellation",
-        justification="Cancel equal primes from both sides and repeat the argument until both factorizations are shown to be identical",
+        justification=(
+            "Cancel equal primes from both sides and repeat the argument "
+            "until both factorizations are shown to be identical"
+        ),
     )
 
     step9 = ProofStep(
         premises=[existence_stmt, uniqueness_stmt],
         conclusion=LogicalStatement(description),
         rule="Conjunction",
-        justification="The Fundamental Theorem follows from both existence and uniqueness of prime factorization",
+        justification=(
+            "The Fundamental Theorem follows from both existence and uniqueness "
+            "of prime factorization"
+        ),
     )
 
     # Add all proof steps

@@ -82,8 +82,6 @@ class TestSymbolicMath:
 
         # Specify variable explicitly
         solutions2 = SymbolicMath.solve_equation("x**2 + y - 4", "x")
-        x, y = sp.symbols("x y")
-        expected2 = [-sp.sqrt(4 - y), sp.sqrt(4 - y)]
         assert len(solutions2) == 2
 
     def test_differentiate(self):
@@ -245,7 +243,6 @@ class TestFunctions:
             assert func_name in FUNCTIONS
 
         # Test function evaluation
-        x = sp.Symbol("x")
         sin_func = FUNCTIONS["sin"]
         result = sin_func(sp.pi / 2)
         assert result == 1
@@ -257,7 +254,7 @@ class TestIntegration:
     def test_integration_with_number_theory(self):
         """Test that symbolic math can work with number theory concepts."""
         # Generate prime polynomials or work with prime-related expressions
-        x = SymbolicMath.create_symbol("x")
+        SymbolicMath.create_symbol("x")
 
         # Example: polynomial that generates many primes
         # f(x) = x^2 - x + 41 (Euler's prime-generating polynomial)

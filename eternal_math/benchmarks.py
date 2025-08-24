@@ -8,18 +8,15 @@ of mathematical algorithms implemented in eternal-math.
 import statistics
 import time
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional
 
 import matplotlib.pyplot as plt
 
-from .core import gcd, is_prime, lcm
+from .core import gcd, is_prime
 from .number_theory import (
-    collatz_sequence,
-    euler_totient,
     fibonacci_sequence,
     is_perfect_number,
     sieve_of_eratosthenes,
-    twin_primes,
 )
 
 
@@ -71,7 +68,7 @@ class PerformanceBenchmark:
 
         for _ in range(iterations):
             start_time = time.perf_counter()
-            result = func(*args, **kwargs)
+            func(*args, **kwargs)  # Execute function without storing result
             end_time = time.perf_counter()
             times.append(end_time - start_time)
 
@@ -133,16 +130,18 @@ class PerformanceBenchmark:
             result = self.time_function(sieve_of_eratosthenes, size, iterations=5)
             results["sieve_of_eratosthenes"].append(result)
             print(
-                f"Sieve of Eratosthenes (n={size}): {result.mean_time:.4f}s ± {result.std_dev:.4f}s"
+                f"Sieve of Eratosthenes (n={size}): "
+                f"{result.mean_time:.4f}s ± {result.std_dev:.4f}s"
             )
 
         # Benchmark individual prime checks
         test_numbers = [97, 997, 9973, 99991, 999983]  # Known primes
-        for i, num in enumerate(test_numbers):
+        for num in test_numbers:
             result = self.time_function(is_prime, num, iterations=100)
             results["is_prime_checks"].append(result)
             print(
-                f"Prime check (n={num}): {result.mean_time:.6f}s ± {result.std_dev:.6f}s"
+                f"Prime check (n={num}): "
+                f"{result.mean_time:.6f}s ± {result.std_dev:.6f}s"
             )
 
         return results
@@ -168,7 +167,8 @@ class PerformanceBenchmark:
             result = self.time_function(fibonacci_sequence, size, iterations=10)
             results.append(result)
             print(
-                f"Fibonacci sequence (n={size}): {result.mean_time:.4f}s ± {result.std_dev:.4f}s"
+                f"Fibonacci sequence (n={size}): "
+                f"{result.mean_time:.4f}s ± {result.std_dev:.4f}s"
             )
 
         return results
@@ -202,7 +202,8 @@ class PerformanceBenchmark:
             result = self.time_function(self.find_perfect_numbers, size, iterations=3)
             perfect_results.append(result)
             print(
-                f"Perfect numbers (limit={size}): {result.mean_time:.4f}s ± {result.std_dev:.4f}s"
+                f"Perfect numbers (limit={size}): "
+                f"{result.mean_time:.4f}s ± {result.std_dev:.4f}s"
             )
         results["perfect_numbers"] = perfect_results
         print()

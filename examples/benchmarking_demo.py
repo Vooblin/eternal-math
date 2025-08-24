@@ -66,10 +66,10 @@ def main():
     # Example 6: Run algorithm comparison benchmarks
     print("6. Running Algorithm Comparison Benchmarks:")
     try:
-        prime_results = benchmark.benchmark_prime_algorithms([100, 1000, 5000])
+        benchmark.benchmark_prime_algorithms([100, 1000, 5000])
         print("   Prime algorithm benchmarks completed!")
 
-        fib_results = benchmark.benchmark_fibonacci_algorithms([10, 50, 100])
+        benchmark.benchmark_fibonacci_algorithms([10, 50, 100])
         print("   Fibonacci algorithm benchmarks completed!")
 
     except Exception as e:
@@ -85,7 +85,7 @@ def main():
     if response == "y" or response == "yes":
         print("\n🔄 Running comprehensive benchmark suite...")
         try:
-            full_benchmark = run_performance_analysis()
+            run_performance_analysis()
             print("✅ Comprehensive benchmarks completed!")
             print("📊 Check 'performance_report.txt' for detailed results")
             print("📈 Check 'math_plots/' directory for performance visualizations")

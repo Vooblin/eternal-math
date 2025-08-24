@@ -18,7 +18,7 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 3. Install development dependencies:
 ```bash
-pip install -e .[dev]
+pip install -e '.[dev]'
 ```
 
 ## Code Quality Standards

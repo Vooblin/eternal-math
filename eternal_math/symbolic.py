@@ -23,7 +23,6 @@ from sympy import (
     solve,
     sqrt,
     symbols,
-    sympify,
     tan,
 )
 from sympy.parsing.sympy_parser import parse_expr
@@ -97,7 +96,8 @@ class SymbolicMath:
                 variable = list(free_symbols)[0]
             else:
                 raise ValueError(
-                    "Multiple variables found, please specify which variable to solve for"
+                    "Multiple variables found, please specify which variable "
+                    "to solve for"
                 )
         elif isinstance(variable, str):
             variable = symbols(variable)

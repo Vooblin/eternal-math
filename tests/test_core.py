@@ -1,8 +1,6 @@
 """
-Tests for the core mathematical utilities.
+Test module for core mathematical utilities.
 """
-
-import pytest
 
 from eternal_math.core import Function, Set, gcd, is_prime, lcm, prime_factorization
 
@@ -58,13 +56,13 @@ def test_gcd_lcm():
 def test_prime_functions():
     """Test prime-related functions."""
     # Test is_prime
-    assert is_prime(2) == True
-    assert is_prime(3) == True
-    assert is_prime(4) == False
-    assert is_prime(17) == True
-    assert is_prime(25) == False
-    assert is_prime(1) == False
-    assert is_prime(0) == False
+    assert is_prime(2) is True
+    assert is_prime(3) is True
+    assert is_prime(4) is False
+    assert is_prime(17) is True
+    assert is_prime(25) is False
+    assert is_prime(1) is False
+    assert is_prime(0) is False
 
     # Test prime_factorization
     assert prime_factorization(12) == [2, 2, 3]

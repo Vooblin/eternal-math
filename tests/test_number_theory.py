@@ -41,10 +41,10 @@ def test_fibonacci():
 
 def test_perfect_numbers():
     """Test perfect number detection."""
-    assert is_perfect_number(6) == True  # 1 + 2 + 3 = 6
-    assert is_perfect_number(28) == True  # 1 + 2 + 4 + 7 + 14 = 28
-    assert is_perfect_number(12) == False
-    assert is_perfect_number(1) == False
+    assert is_perfect_number(6) is True  # 1 + 2 + 3 = 6
+    assert is_perfect_number(28) is True  # 1 + 2 + 4 + 7 + 14 = 28
+    assert is_perfect_number(12) is False
+    assert is_perfect_number(1) is False
 
 
 def test_euler_totient():
@@ -74,7 +74,7 @@ def test_twin_primes():
 def test_goldbach_conjecture():
     """Test Goldbach conjecture verification for small numbers."""
     # This should be true for small limits
-    assert verify_goldbach_conjecture(100) == True
+    assert verify_goldbach_conjecture(100) is True
 
 
 def test_chinese_remainder_theorem():

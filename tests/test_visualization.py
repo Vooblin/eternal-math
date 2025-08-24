@@ -2,9 +2,8 @@
 Test cases for visualization module.
 """
 
-import os
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 from eternal_math.visualization import MathVisualizer, create_output_directory
 

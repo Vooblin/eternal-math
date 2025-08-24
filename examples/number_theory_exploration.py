@@ -1,7 +1,8 @@
 """
 Example: Basic Number Theory Exploration
 
-This example demonstrates how to use Eternal Math to explore basic number theory concepts.
+This example demonstrates how to use Eternal Math to explore basic number theory
+ concepts.
 """
 
 from eternal_math import (
@@ -45,7 +46,8 @@ def main():
     print("5. Goldbach Conjecture Verification (up to 100):")
     goldbach_holds = verify_goldbach_conjecture(100)
     print(
-        f"   Goldbach conjecture holds for all even numbers up to 100: {goldbach_holds}\n"
+        "   Goldbach conjecture holds for all even numbers up to 100: "
+        f"{goldbach_holds}\n"
     )
 
     # Demonstrate theorem system
@@ -54,10 +56,12 @@ def main():
     print(f"   Theorem: {fundamental_theorem.description}")
     print(f"   Proven: {fundamental_theorem.proven}")
     print(
-        f"   Proof steps: {len(fundamental_theorem.proof.steps) if fundamental_theorem.proof else 0}"
+        f"   Proof steps: {len(fundamental_theorem.proof.steps)
+                           if fundamental_theorem.proof else 0}"
     )
     print(
-        f"   Axioms used: {len(fundamental_theorem.proof.axioms) if fundamental_theorem.proof else 0}\n"
+        f"   Axioms used: {len(fundamental_theorem.proof.axioms)
+                           if fundamental_theorem.proof else 0}\n"
     )
 
     print("=== End of Exploration ===")
