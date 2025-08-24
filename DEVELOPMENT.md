@@ -5,18 +5,21 @@ This guide provides information for developers working on the Eternal Math proje
 ## Development Setup
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/Vooblin/eternal-math.git
 cd eternal-math
 ```
 
 2. Create a virtual environment:
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
 3. Install development dependencies:
+
 ```bash
 pip install -e '.[dev]'
 ```
@@ -24,14 +27,17 @@ pip install -e '.[dev]'
 ## Code Quality Standards
 
 ### Type Checking
+
 This project uses comprehensive type hints throughout the codebase. We use mypy for static type checking.
 
 Run type checking:
+
 ```bash
 mypy eternal_math/ tests/ examples/
 ```
 
 ### Code Formatting
+
 We use Black for code formatting and isort for import sorting:
 
 ```bash
@@ -46,15 +52,18 @@ black --check eternal_math/ tests/ examples/
 ```
 
 ### Linting
+
 We use flake8 for linting:
+
 ```bash
 flake8 eternal_math/ tests/ examples/
 ```
 
 ### Running All Quality Checks
+
 ```bash
 # Run all quality checks
-make lint  # if Makefile exists, or run commands individually:
+pre-commit run --all-files  # if pre-commit exists, or run commands individually:
 black --check eternal_math/ tests/ examples/
 isort --check-only eternal_math/ tests/ examples/
 flake8 eternal_math/ tests/ examples/
@@ -65,6 +74,7 @@ pytest tests/
 ## Type Hints Guidelines
 
 ### Function Annotations
+
 All functions must have complete type annotations:
 
 ```python
@@ -76,19 +86,21 @@ def process_data(items: List[int], threshold: Optional[float] = None) -> Dict[st
 ```
 
 ### Class Methods
+
 Class methods should include type annotations for parameters and return values:
 
 ```python
 class MathProcessor:
     def __init__(self, config: Dict[str, Any]) -> None:
         self.config = config
-    
+
     def compute(self, value: float) -> Optional[float]:
         """Compute processed value."""
         pass
 ```
 
 ### Generic Types
+
 Use appropriate generic types for containers:
 
 ```python
@@ -106,6 +118,7 @@ def process_pairs(pairs):  # Missing type hints
 ## Testing
 
 Run tests with coverage:
+
 ```bash
 pytest tests/ -v --cov=eternal_math --cov-report=html
 ```
@@ -113,22 +126,23 @@ pytest tests/ -v --cov=eternal_math --cov-report=html
 ## Documentation
 
 ### Docstring Format
+
 Use Google-style docstrings with type information:
 
 ```python
 def calculate_prime_density(limit: int, primes: List[int]) -> float:
     """Calculate the density of prime numbers up to a given limit.
-    
+
     Args:
         limit: The upper bound for calculation
         primes: List of prime numbers up to the limit
-        
+
     Returns:
         The density as a float between 0 and 1
-        
+
     Raises:
         ValueError: If limit is less than 2
-        
+
     Example:
         >>> primes = sieve_of_eratosthenes(100)
         >>> density = calculate_prime_density(100, primes)
@@ -168,6 +182,7 @@ eternal_math/
 ## CI/CD Pipeline
 
 The project uses GitHub Actions for:
+
 - Running tests on Python 3.12
 - Type checking with mypy
 - Code coverage reporting
@@ -176,6 +191,7 @@ The project uses GitHub Actions for:
 ## Performance Considerations
 
 When adding new features:
+
 1. Consider algorithmic complexity
 2. Use appropriate data structures
 3. Add benchmarks for performance-critical code
@@ -197,11 +213,13 @@ When adding new mathematical functionality:
 ## Dependencies
 
 ### Runtime Dependencies
+
 - `numpy`: Numerical computing
 - `sympy`: Symbolic mathematics
 - `matplotlib`: Plotting and visualization
 
 ### Development Dependencies
+
 - `pytest`: Testing framework
 - `pytest-cov`: Coverage reporting
 - `black`: Code formatting

@@ -1,0 +1,142 @@
+name: Feature Request
+description: Suggest a new mathematical feature or improvement for Eternal Math
+title: "[FEATURE] "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Mathematical software benefits greatly from community input.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A clear and concise description of the feature you'd like to see added.
+      placeholder: Briefly describe the feature...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Mathematical Category
+      description: Which area of mathematics does this feature relate to?
+      options:
+        - Number Theory
+        - Symbolic Mathematics
+        - Proof System
+        - Visualization
+        - CLI Interface
+        - Performance/Benchmarking
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation and Context
+      description: Why is this feature important? What problem does it solve?
+      placeholder: |
+        Example: This feature would help with...
+        Mathematical context: This is useful for studying...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How should this feature work? Be as specific as possible.
+      placeholder: |
+        The feature should work like this:
+        1. User calls function xyz()
+        2. Function computes...
+        3. Returns result in format...
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Usage Examples
+      description: Provide examples of how this feature would be used.
+      render: python
+      placeholder: |
+        # Example usage:
+        from eternal_math.new_module import new_function
+        result = new_function(parameter=value)
+        print(result)  # Expected output: ...
+
+  - type: textarea
+    id: mathematical_details
+    attributes:
+      label: Mathematical Background
+      description: |
+        If relevant, provide mathematical background, formulas, or references.
+      placeholder: |
+        Mathematical formula: f(x) = ...
+        References:
+        - Book/Paper name, Author, Year
+        - Online resource: URL
+
+        Relevant mathematical concepts:
+        - Concept 1: explanation
+        - Concept 2: explanation
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative approaches or existing solutions?
+      placeholder: |
+        Alternative approaches:
+        1. Approach A: pros and cons
+        2. Approach B: pros and cons
+
+        Existing solutions in other libraries: ...
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Implementation Complexity
+      description: How complex do you think this feature would be to implement?
+      options:
+        - Low (simple function addition)
+        - Medium (moderate algorithmic work)
+        - High (complex mathematical implementation)
+        - Very High (research-level mathematics)
+        - Not sure
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution Interest
+      options:
+        - label: I would be interested in contributing to the implementation
+        - label: I have mathematical expertise in this area
+        - label: I can provide test cases and examples
+        - label: I can help with documentation
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or mathematical diagrams about the feature request here.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to ensure this feature hasn't been requested
+          required: true
+        - label: This feature aligns with the goals of a mathematical computing platform
+          required: true
+        - label: I have provided sufficient detail for implementation consideration
+          required: true
