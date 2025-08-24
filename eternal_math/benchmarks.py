@@ -89,7 +89,7 @@ class PerformanceBenchmark:
         self.results.append(benchmark_result)
         return benchmark_result
 
-    def _extract_input_size(self, args: tuple, kwargs: dict) -> int:
+    def _extract_input_size(self, args: tuple[Any, ...], kwargs: dict[str, Any]) -> int:
         """Extract a representative input size from function arguments."""
         # For most number theory functions, the first argument is the size/limit
         if args:

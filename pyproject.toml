@@ -76,6 +76,7 @@ warn_no_return = true
 warn_unreachable = true
 strict_equality = true
 show_error_codes = true
+strict = true
 
 [[tool.mypy.overrides]]
 module = ["matplotlib.*", "numpy.*", "sympy.*"]
