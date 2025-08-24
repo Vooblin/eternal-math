@@ -2,7 +2,42 @@
 Core mathematical utilities and data structures for Eternal Math.
 """
 
+import math
 from typing import Any, Callable, List, Optional
+
+
+# Mathematical Constants
+class Constants:
+    """Container for fundamental mathematical constants."""
+
+    # Basic constants
+    PI = math.pi
+    E = math.e
+    TAU = 2 * math.pi  # τ = 2π
+
+    # Golden ratio and related constants
+    PHI = (1 + math.sqrt(5)) / 2  # Golden ratio φ = (1 + √5)/2
+    PHI_INVERSE = 2 / (1 + math.sqrt(5))  # 1/φ = (√5 - 1)/2
+
+    # Euler-Mascheroni constant (approximation)
+    GAMMA = 0.5772156649015329
+
+    # Mathematical ratios
+    SQRT_2 = math.sqrt(2)
+    SQRT_3 = math.sqrt(3)
+    SQRT_5 = math.sqrt(5)
+
+    # Natural logarithms of common values
+    LN_2 = math.log(2)
+    LN_10 = math.log(10)
+
+    # Common mathematical limits
+    INFINITY = float("inf")
+    NEG_INFINITY = float("-inf")
+
+
+# Create global constants instance for easy access
+constants = Constants()
 
 
 class MathematicalObject:
@@ -241,6 +276,8 @@ def prime_factorization(n: int) -> List[int]:
 
 
 __all__ = [
+    "Constants",
+    "constants",
     "MathematicalObject",
     "Set",
     "Function",
