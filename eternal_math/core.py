@@ -51,7 +51,7 @@ class Function(MathematicalObject):
 
     def __init__(
         self,
-        func: Callable,
+        func: Callable[..., Any],
         domain: Optional[Set] = None,
         codomain: Optional[Set] = None,
         name: Optional[str] = None,
