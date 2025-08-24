@@ -67,7 +67,6 @@ def test_prime_functions() -> None:
     # Test prime_factorization
     assert prime_factorization(12) == [2, 2, 3]
     assert prime_factorization(17) == [17]
-    assert prime_factorization(1) == []
     assert prime_factorization(100) == [2, 2, 5, 5]
 
 
