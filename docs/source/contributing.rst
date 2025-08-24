@@ -48,7 +48,7 @@ We use Black for code formatting and isort for import sorting:
 
     # Format code
     black eternal_math/ tests/ examples/
-    
+
     # Sort imports
     isort eternal_math/ tests/ examples/
 

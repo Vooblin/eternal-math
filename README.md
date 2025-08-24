@@ -9,22 +9,26 @@ Eternal Math provides a Python-based framework for mathematical computation, the
 ## Features
 
 ### Core Mathematical Objects
+
 - **Set Theory**: Mathematical sets with standard operations (union, intersection, difference)
 - **Function Theory**: Mathematical functions with composition and evaluation
 - **Number Theory**: Prime numbers, GCD/LCM, factorization algorithms
 
 ### Proof System
+
 - **Formal Proofs**: Structured proof representation with axioms, theorems, and proof steps
 - **Theorem Management**: Create, verify, and organize mathematical theorems
 - **Logical Framework**: Support for direct proofs, proof by contradiction, and more
 
 ### Number Theory Toolkit
+
 - **Prime Generation**: Sieve of Eratosthenes for efficient prime computation
 - **Sequences**: Fibonacci numbers, perfect numbers, Collatz sequences
 - **Conjectures**: Goldbach conjecture verification, twin prime detection
 - **Advanced Tools**: Euler's totient function, Chinese Remainder Theorem
 
 ### Visualization & Graphics
+
 - **Function Plotting**: Visualize mathematical functions with customizable ranges
 - **Sequence Visualization**: Plot mathematical sequences with annotations
 - **Prime Distribution**: Graphical analysis of prime number patterns
@@ -32,6 +36,7 @@ Eternal Math provides a Python-based framework for mathematical computation, the
 - **Comparative Analysis**: Side-by-side sequence comparisons
 
 ### Performance Benchmarking
+
 - **Algorithm Timing**: Measure execution time of mathematical functions
 - **Performance Analysis**: Compare different algorithms and input sizes
 - **Statistical Metrics**: Mean, standard deviation, min/max timing
@@ -55,7 +60,7 @@ Comprehensive documentation is available and includes:
 
 - **Quick Start Guide**: Get up and running quickly
 - **User Guides**: In-depth coverage of each module
-- **API Reference**: Complete documentation of all functions and classes  
+- **API Reference**: Complete documentation of all functions and classes
 - **Examples**: Practical usage examples with code
 
 ### Building Documentation Locally
@@ -181,7 +186,6 @@ run_performance_analysis()  # Creates detailed report and visualizations
 # eternal-math> benchmark       # Quick benchmarks
 # eternal-math> benchmark full  # Comprehensive analysis
 ```
-```
 
 ## Examples
 
@@ -233,6 +237,18 @@ eternal-math/
 ## Contributing
 
 This is an open-source project. Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
+
+### Contribution Guidelines
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Make** your changes with tests
+4. **Run** the test suite and quality checks
+5. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+6. **Push** to the branch (`git push origin feature/amazing-feature`)
+7. **Open** a Pull Request
+
+All contributions will be automatically tested by our CI pipeline.
 
 ## License
 

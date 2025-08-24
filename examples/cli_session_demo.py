@@ -7,7 +7,7 @@ Run this with: python -m eternal_math.cli
 
 # This is a sample CLI session transcript showing various commands:
 
-"""
+cli_session_transcript = """
 🧮 Welcome to Eternal Math Interactive CLI
 ==================================================
 Explore mathematical concepts interactively!

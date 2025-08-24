@@ -6,12 +6,12 @@
 Welcome to Eternal Math's documentation!
 ==========================================
 
-**Eternal Math** is an open-source software platform designed as a comprehensive, 
+**Eternal Math** is an open-source software platform designed as a comprehensive,
 ever-evolving toolkit for exploring, proving, and generating mathematical concepts.
 
-The platform provides a Python-based framework for mathematical computation, 
-theorem proving, and concept exploration, combining computational tools with 
-formal proof systems to create an integrated environment for mathematical 
+The platform provides a Python-based framework for mathematical computation,
+theorem proving, and concept exploration, combining computational tools with
+formal proof systems to create an integrated environment for mathematical
 research and education.
 
 .. note::
@@ -65,7 +65,7 @@ Features
 
 * **Core Mathematical Objects**: Sets, functions, number theory tools
 * **Proof System**: Formal proofs with axioms, theorems, and verification
-* **Number Theory Toolkit**: Primes, sequences, conjectures, advanced algorithms  
+* **Number Theory Toolkit**: Primes, sequences, conjectures, advanced algorithms
 * **Symbolic Mathematics**: Algebraic manipulation, calculus, equation solving
 * **Visualization & Graphics**: Function plotting, sequence analysis, mathematical graphics
 * **Performance Benchmarking**: Algorithm timing and performance analysis
@@ -77,4 +77,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

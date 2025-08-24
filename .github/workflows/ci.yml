@@ -8,40 +8,33 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ["3.12"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.12", "3.13"]
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -e .[dev]
-    
+
     - name: Run tests
       run: |
         pytest tests/ -v --cov=eternal_math --cov-report=xml
-    
-    - name: Type check with mypy
-      run: |
-        mypy eternal_math/ tests/ examples/
 
-    - name: Code format with black and isort
+    - name: Check code quality with pre-commit
       run: |
-        black --check eternal_math/ tests/ examples/
-        isort --check-only eternal_math/ tests/ examples/
-
-    - name: Lint code with flake8
-      run: |
-        flake8 eternal_math/ tests/ examples/
+        pre-commit run --all-files
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -54,26 +47,26 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: "3.12"
-    
+
     - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
         pip install build twine
-    
+
     - name: Build package
       run: python -m build
-    
+
     - name: Check package
       run: twine check dist/*
-    
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
