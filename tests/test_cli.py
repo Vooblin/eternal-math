@@ -345,15 +345,19 @@ class TestEternalMathCLI(unittest.TestCase):
         self.assertIn("Usage:", output)
 
     # Visualization Commands Tests
+    @patch("matplotlib.pyplot.show")
     @patch("builtins.print")
     @patch("eternal_math.cli.MathVisualizer")
-    def test_plot_function_command(self, mock_visualizer: Any, mock_print: Any) -> None:
+    def test_plot_function_command(
+        self, mock_visualizer: Any, mock_print: Any, mock_show: Any
+    ) -> None:
         """Test plot function command."""
         mock_viz_instance = MagicMock()
         mock_visualizer.return_value = mock_viz_instance
 
         self.cli._plot_function(["sin(x)"])
         self.assertTrue(mock_print.called)
+        self.assertTrue(mock_show.called)
 
     @patch("builtins.print")
     def test_plot_function_command_no_args(self, mock_print: Any) -> None:
@@ -364,11 +368,13 @@ class TestEternalMathCLI(unittest.TestCase):
         output = " ".join(calls)
         self.assertIn("Usage:", output)
 
+    @patch("matplotlib.pyplot.show")
     @patch("builtins.print")
-    def test_plot_sequence_command(self, mock_print: Any) -> None:
+    def test_plot_sequence_command(self, mock_print: Any, mock_show: Any) -> None:
         """Test plot sequence command."""
         self.cli._plot_sequence(["fibonacci", "10"])
         self.assertTrue(mock_print.called)
+        self.assertTrue(mock_show.called)
 
     @patch("builtins.print")
     def test_plot_sequence_command_no_args(self, mock_print: Any) -> None:
@@ -379,11 +385,13 @@ class TestEternalMathCLI(unittest.TestCase):
         output = " ".join(calls)
         self.assertIn("Usage:", output)
 
+    @patch("matplotlib.pyplot.show")
     @patch("builtins.print")
-    def test_plot_primes_command(self, mock_print: Any) -> None:
+    def test_plot_primes_command(self, mock_print: Any, mock_show: Any) -> None:
         """Test plot primes command."""
         self.cli._plot_primes(["50"])
         self.assertTrue(mock_print.called)
+        self.assertTrue(mock_show.called)
 
     @patch("builtins.print")
     def test_plot_primes_command_no_args(self, mock_print: Any) -> None:
@@ -394,11 +402,13 @@ class TestEternalMathCLI(unittest.TestCase):
         output = " ".join(calls)
         self.assertIn("Usage:", output)
 
+    @patch("matplotlib.pyplot.show")
     @patch("builtins.print")
-    def test_plot_collatz_command(self, mock_print: Any) -> None:
+    def test_plot_collatz_command(self, mock_print: Any, mock_show: Any) -> None:
         """Test plot Collatz command."""
         self.cli._plot_collatz(["7"])
         self.assertTrue(mock_print.called)
+        self.assertTrue(mock_show.called)
 
     @patch("builtins.print")
     def test_plot_collatz_command_no_args(self, mock_print: Any) -> None:
@@ -409,11 +419,13 @@ class TestEternalMathCLI(unittest.TestCase):
         output = " ".join(calls)
         self.assertIn("Usage:", output)
 
+    @patch("matplotlib.pyplot.show")
     @patch("builtins.print")
-    def test_plot_comparative_command(self, mock_print: Any) -> None:
+    def test_plot_comparative_command(self, mock_print: Any, mock_show: Any) -> None:
         """Test plot comparative command."""
         self.cli._plot_comparative(["fibonacci", "primes", "10"])
         self.assertTrue(mock_print.called)
+        self.assertTrue(mock_show.called)
 
     @patch("builtins.print")
     def test_plot_comparative_command_no_args(self, mock_print: Any) -> None:
