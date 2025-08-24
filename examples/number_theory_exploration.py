@@ -15,7 +15,7 @@ from eternal_math import (
 )
 
 
-def main():
+def main() -> None:
     """Demonstrate various number theory features."""
     print("=== Eternal Math: Number Theory Exploration ===\n")
 

@@ -17,7 +17,7 @@ from eternal_math.symbolic import (
 class TestSymbolicMath:
     """Test the basic symbolic mathematics functionality."""
 
-    def test_create_symbol(self):
+    def test_create_symbol(self) -> None:
         """Test creating symbolic variables."""
         x = SymbolicMath.create_symbol("x")
         assert isinstance(x, sp.Symbol)
@@ -29,13 +29,13 @@ class TestSymbolicMath:
         assert y.is_real is True
         assert y.is_positive is True
 
-    def test_create_symbols(self):
+    def test_create_symbols(self) -> None:
         """Test creating multiple symbolic variables."""
         x, y, z = SymbolicMath.create_symbols("x y z")
         assert all(isinstance(var, sp.Symbol) for var in [x, y, z])
         assert [str(var) for var in [x, y, z]] == ["x", "y", "z"]
 
-    def test_parse_expression(self):
+    def test_parse_expression(self) -> None:
         """Test parsing string expressions."""
         expr = SymbolicMath.parse_expression("x**2 + 2*x + 1")
         x = sp.Symbol("x")
@@ -47,7 +47,7 @@ class TestSymbolicMath:
         expected2 = sp.sin(x) + sp.cos(x)
         assert expr2 == expected2
 
-    def test_simplify_expression(self):
+    def test_simplify_expression(self) -> None:
         """Test expression simplification."""
         # Test with string input
         simplified = SymbolicMath.simplify_expression("(x + 1)**2 - (x**2 + 2*x + 1)")
@@ -59,21 +59,21 @@ class TestSymbolicMath:
         simplified = SymbolicMath.simplify_expression(expr)
         assert simplified == 0
 
-    def test_expand_expression(self):
+    def test_expand_expression(self) -> None:
         """Test expression expansion."""
         expanded = SymbolicMath.expand_expression("(x + 1)**2")
         x = sp.Symbol("x")
         expected = x**2 + 2 * x + 1
         assert expanded == expected
 
-    def test_factor_expression(self):
+    def test_factor_expression(self) -> None:
         """Test expression factoring."""
         factored = SymbolicMath.factor_expression("x**2 - 1")
         x = sp.Symbol("x")
         expected = (x - 1) * (x + 1)
         assert factored == expected
 
-    def test_solve_equation(self):
+    def test_solve_equation(self) -> None:
         """Test equation solving."""
         # Simple quadratic equation
         solutions = SymbolicMath.solve_equation("x**2 - 4")
@@ -84,7 +84,7 @@ class TestSymbolicMath:
         solutions2 = SymbolicMath.solve_equation("x**2 + y - 4", "x")
         assert len(solutions2) == 2
 
-    def test_differentiate(self):
+    def test_differentiate(self) -> None:
         """Test differentiation."""
         # First derivative
         derivative = SymbolicMath.differentiate("x**3 + 2*x**2 + x", "x")
@@ -98,7 +98,7 @@ class TestSymbolicMath:
         # Use simplify to handle different but equivalent expressions
         assert sp.simplify(second_deriv - expected2) == 0
 
-    def test_integrate(self):
+    def test_integrate(self) -> None:
         """Test integration."""
         # Indefinite integral
         integral = SymbolicMath.integrate("2*x + 1", "x")
@@ -110,7 +110,7 @@ class TestSymbolicMath:
         definite = SymbolicMath.integrate("x", "x", (0, 2))
         assert definite == 2  # ∫₀² x dx = [x²/2]₀² = 2
 
-    def test_substitute(self):
+    def test_substitute(self) -> None:
         """Test variable substitution."""
         x, y = sp.symbols("x y")
         expr = x**2 + y
@@ -124,13 +124,13 @@ class TestSymbolicMath:
         result2 = SymbolicMath.substitute(expr, {"x": 2, "y": 3})
         assert result2 == 7
 
-    def test_to_latex(self):
+    def test_to_latex(self) -> None:
         """Test LaTeX conversion."""
         latex_str = SymbolicMath.to_latex("x**2 + sqrt(y)")
         assert "x^{2}" in latex_str
         assert "sqrt" in latex_str or r"\sqrt" in latex_str
 
-    def test_evaluate_expression(self):
+    def test_evaluate_expression(self) -> None:
         """Test numerical evaluation."""
         # Simple expression
         result = SymbolicMath.evaluate_expression("2 + 3")
@@ -148,19 +148,19 @@ class TestSymbolicMath:
 class TestCalculusUtils:
     """Test calculus utilities."""
 
-    def test_find_critical_points(self):
+    def test_find_critical_points(self) -> None:
         """Test finding critical points."""
         # f(x) = x^2, critical point at x = 0
         critical_points = CalculusUtils.find_critical_points("x**2", "x")
         assert 0 in critical_points
 
-    def test_find_inflection_points(self):
+    def test_find_inflection_points(self) -> None:
         """Test finding inflection points."""
         # f(x) = x^3, inflection point at x = 0
         inflection_points = CalculusUtils.find_inflection_points("x**3", "x")
         assert 0 in inflection_points
 
-    def test_taylor_series(self):
+    def test_taylor_series(self) -> None:
         """Test Taylor series expansion."""
         # Taylor series of e^x around x = 0
         series = CalculusUtils.taylor_series("exp(x)", "x", point=0, order=4)
@@ -172,7 +172,7 @@ class TestCalculusUtils:
         poly_coeffs = [series.coeff(x, i) for i in range(4)]
         assert poly_coeffs == expected_coeffs
 
-    def test_limit(self):
+    def test_limit(self) -> None:
         """Test limit computation."""
         # lim x→0 sin(x)/x = 1
         limit_result = CalculusUtils.limit("sin(x)/x", "x", 0)
@@ -186,7 +186,7 @@ class TestCalculusUtils:
 class TestAlgebraUtils:
     """Test algebra utilities."""
 
-    def test_solve_system(self):
+    def test_solve_system(self) -> None:
         """Test solving systems of equations."""
         # Simple 2x2 system: x + y = 3, x - y = 1
         system = ["x + y - 3", "x - y - 1"]
@@ -197,7 +197,7 @@ class TestAlgebraUtils:
         assert solution[x] == 2
         assert solution[y] == 1
 
-    def test_partial_fractions(self):
+    def test_partial_fractions(self) -> None:
         """Test partial fraction decomposition."""
         # (2x + 3)/(x^2 - 1) = A/(x-1) + B/(x+1)
         result = AlgebraUtils.partial_fractions("(2*x + 3)/(x**2 - 1)", "x")
@@ -209,7 +209,7 @@ class TestAlgebraUtils:
         original = (2 * x + 3) / (x**2 - 1)
         assert sp.simplify(result - original) == 0
 
-    def test_simplify_trig(self):
+    def test_simplify_trig(self) -> None:
         """Test trigonometric simplification."""
         # sin²(x) + cos²(x) = 1
         simplified = AlgebraUtils.simplify_trig("sin(x)**2 + cos(x)**2")
@@ -219,7 +219,7 @@ class TestAlgebraUtils:
 class TestConstants:
     """Test mathematical constants."""
 
-    def test_constants_available(self):
+    def test_constants_available(self) -> None:
         """Test that constants are properly defined."""
         assert "pi" in CONSTANTS
         assert "e" in CONSTANTS
@@ -236,7 +236,7 @@ class TestConstants:
 class TestFunctions:
     """Test mathematical functions."""
 
-    def test_functions_available(self):
+    def test_functions_available(self) -> None:
         """Test that common functions are available."""
         required_functions = ["sin", "cos", "tan", "exp", "log", "sqrt"]
         for func_name in required_functions:
@@ -251,7 +251,7 @@ class TestFunctions:
 class TestIntegration:
     """Test integration of symbolic math with the rest of the system."""
 
-    def test_integration_with_number_theory(self):
+    def test_integration_with_number_theory(self) -> None:
         """Test that symbolic math can work with number theory concepts."""
         # Generate prime polynomials or work with prime-related expressions
         SymbolicMath.create_symbol("x")

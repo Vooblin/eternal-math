@@ -7,7 +7,7 @@ This example demonstrates the symbolic mathematics capabilities using SymPy inte
 from eternal_math import AlgebraUtils, CalculusUtils, SymbolicMath
 
 
-def main():
+def main() -> None:
     """Demonstrate symbolic mathematics features."""
     print("=== Eternal Math: Symbolic Mathematics ===\n")
 
@@ -83,7 +83,7 @@ def main():
     print("   Values for n = 1 to 5:")
     for n in range(1, 6):
         value = SymbolicMath.evaluate_expression(prime_poly, {"n": n})
-        print(f"   n={n}: {int(value)}")
+        print(f"   n={n}: {value}")
 
     print("\n" + "=" * 50)
     print("Symbolic mathematics greatly expands Eternal Math's capabilities!")

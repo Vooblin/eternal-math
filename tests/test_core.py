@@ -5,7 +5,7 @@ Test module for core mathematical utilities.
 from eternal_math.core import Function, Set, gcd, is_prime, lcm, prime_factorization
 
 
-def test_set_operations():
+def test_set_operations() -> None:
     """Test basic set operations."""
     set_a = Set([1, 2, 3])
     set_b = Set([3, 4, 5])
@@ -27,7 +27,7 @@ def test_set_operations():
     assert 6 not in set_a
 
 
-def test_function_operations():
+def test_function_operations() -> None:
     """Test function composition and evaluation."""
     # Create simple functions
     square = Function(lambda x: x**2, name="square")
@@ -42,7 +42,7 @@ def test_function_operations():
     assert composed(3) == 16  # (3 + 1)^2 = 16
 
 
-def test_gcd_lcm():
+def test_gcd_lcm() -> None:
     """Test greatest common divisor and least common multiple."""
     assert gcd(48, 18) == 6
     assert gcd(17, 13) == 1  # Coprime numbers
@@ -53,7 +53,7 @@ def test_gcd_lcm():
     assert lcm(0, 5) == 0
 
 
-def test_prime_functions():
+def test_prime_functions() -> None:
     """Test prime-related functions."""
     # Test is_prime
     assert is_prime(2) is True

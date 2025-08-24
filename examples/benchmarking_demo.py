@@ -15,7 +15,7 @@ from eternal_math import (
 )
 
 
-def main():
+def main() -> None:
     """Demonstrate benchmarking capabilities."""
     print("=== Eternal Math: Performance Benchmarking Demo ===\n")
 

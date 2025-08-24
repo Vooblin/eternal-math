@@ -19,7 +19,7 @@ from eternal_math import (
 )
 
 
-def demo_function_plotting():
+def demo_function_plotting() -> None:
     """Demonstrate function plotting capabilities."""
     print("🎨 Function Plotting Demo")
     print("=" * 40)
@@ -41,11 +41,11 @@ def demo_function_plotting():
 
         # Determine appropriate range for each function
         if "exp" in expr:
-            x_range = (-2, 3)
+            x_range = (-2.0, 3.0)
         elif "log" in expr:
-            x_range = (0.1, 10)
+            x_range = (0.1, 10.0)
         else:
-            x_range = (-10, 10)
+            x_range = (-10.0, 10.0)
 
         save_path = os.path.join(
             output_dir, f"function_{i}_{expr.replace('*', 'x').replace('/', 'div')}.png"
@@ -61,7 +61,7 @@ def demo_function_plotting():
             print("   ❌ Failed to plot function")
 
 
-def demo_sequence_visualization():
+def demo_sequence_visualization() -> None:
     """Demonstrate sequence visualization."""
     print("\n\n🔢 Sequence Visualization Demo")
     print("=" * 40)
@@ -106,7 +106,7 @@ def demo_sequence_visualization():
     print("   ✅ Plot saved!" if success else "   ❌ Plot failed!")
 
 
-def demo_collatz_trajectories():
+def demo_collatz_trajectories() -> None:
     """Demonstrate Collatz sequence visualization."""
     print("\n\n🌀 Collatz Conjecture Visualization")
     print("=" * 40)
@@ -134,7 +134,7 @@ def demo_collatz_trajectories():
     print("   Note: All sequences eventually reach 1 (conjecture holds)")
 
 
-def demo_comparative_analysis():
+def demo_comparative_analysis() -> None:
     """Demonstrate comparative sequence analysis."""
     print("\n\n📊 Comparative Sequence Analysis")
     print("=" * 40)
@@ -166,7 +166,7 @@ def demo_comparative_analysis():
     print("\n   ✅ Comparative plot saved!" if success else "   ❌ Plot failed!")
 
 
-def main():
+def main() -> None:
     """Run all visualization demos."""
     print("🎯 Eternal Math Visualization Showcase")
     print("=" * 50)
