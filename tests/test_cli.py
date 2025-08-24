@@ -465,11 +465,158 @@ class TestEternalMathCLI(unittest.TestCase):
     @patch("builtins.print")
     def test_fibonacci_command_invalid_input(self, mock_print: Any) -> None:
         """Test fibonacci command with invalid input."""
-        self.cli._fibonacci(["not_a_number"])
+        self.cli._fibonacci(["abc"])
         mock_print.assert_called()
         calls = [str(call) for call in mock_print.call_args_list]
         output = " ".join(calls)
         self.assertIn("valid integer", output)
+
+    # Additional error handling tests for comprehensive coverage
+
+    @patch("builtins.print")
+    def test_primes_command_invalid_input(self, mock_print: Any) -> None:
+        """Test primes command with invalid input."""
+        self.cli._primes(["abc"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("valid integer", output)
+
+    @patch("builtins.print")
+    def test_primes_command_negative_input(self, mock_print: Any) -> None:
+        """Test primes command with negative input."""
+        self.cli._primes(["-5"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("number >= 2", output)
+
+    @patch("builtins.print")
+    def test_fibonacci_command_negative_input(self, mock_print: Any) -> None:
+        """Test fibonacci command with negative input."""
+        self.cli._fibonacci(["-5"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("positive number", output)
+
+    @patch("builtins.print")
+    def test_perfect_numbers_command_invalid_input(self, mock_print: Any) -> None:
+        """Test perfect numbers command with invalid input."""
+        self.cli._perfect_numbers(["abc"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("valid integer", output)
+
+    @patch("builtins.print")
+    def test_perfect_numbers_command_negative_input(self, mock_print: Any) -> None:
+        """Test perfect numbers command with negative input."""
+        self.cli._perfect_numbers(["-5"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("positive number", output)
+
+    @patch("builtins.print")
+    def test_euler_totient_command_invalid_input(self, mock_print: Any) -> None:
+        """Test Euler totient command with invalid input."""
+        self.cli._euler_totient(["abc"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("valid integer", output)
+
+    @patch("builtins.print")
+    def test_collatz_command_invalid_input(self, mock_print: Any) -> None:
+        """Test Collatz command with invalid input."""
+        self.cli._collatz(["abc"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("valid integer", output)
+
+    @patch("builtins.print")
+    def test_twin_primes_command_invalid_input(self, mock_print: Any) -> None:
+        """Test twin primes command with invalid input."""
+        self.cli._twin_primes(["abc"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("valid integer", output)
+
+    @patch("builtins.print")
+    def test_twin_primes_command_small_input(self, mock_print: Any) -> None:
+        """Test twin primes command with input less than 3."""
+        self.cli._twin_primes(["2"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("number >= 3", output)
+
+    @patch("builtins.print")
+    def test_goldbach_command_invalid_input(self, mock_print: Any) -> None:
+        """Test Goldbach command with invalid input."""
+        self.cli._goldbach(["abc"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("valid integer", output)
+
+    @patch("builtins.print")
+    def test_goldbach_command_small_input(self, mock_print: Any) -> None:
+        """Test Goldbach command with input less than 4."""
+        self.cli._goldbach(["2"])
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("number >= 4", output)
+
+    @patch("builtins.print")
+    def test_run_method_keyboard_interrupt(self, mock_print: Any) -> None:
+        """Test run method handles KeyboardInterrupt."""
+        with patch("builtins.input", side_effect=KeyboardInterrupt):
+            self.cli.run()
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("Goodbye", output)
+
+    @patch("builtins.print")
+    def test_run_method_eof_error(self, mock_print: Any) -> None:
+        """Test run method handles EOFError."""
+        with patch("builtins.input", side_effect=EOFError):
+            self.cli.run()
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("Goodbye", output)
+
+    @patch("builtins.print")
+    def test_run_method_generic_exception(self, mock_print: Any) -> None:
+        """Test run method handles generic exceptions."""
+
+        def mock_input_side_effect(*args: Any, **kwargs: Any) -> str:
+            if not hasattr(mock_input_side_effect, "called"):
+                setattr(mock_input_side_effect, "called", True)
+                raise ValueError("Test exception")
+            return "quit"
+
+        with patch("builtins.input", side_effect=mock_input_side_effect):
+            self.cli.run()
+
+        mock_print.assert_called()
+        calls = [str(call) for call in mock_print.call_args_list]
+        output = " ".join(calls)
+        self.assertIn("Error: Test exception", output)
+
+    @patch("builtins.print")
+    def test_run_method_empty_input(self, mock_print: Any) -> None:
+        """Test run method handles empty input."""
+        inputs = ["", "quit"]
+        with patch("builtins.input", side_effect=inputs):
+            self.cli.run()
+        # Should not raise any exception and should continue to next input
 
     @patch("builtins.print")
     def test_fibonacci_command_no_args(self, mock_print: Any) -> None:
