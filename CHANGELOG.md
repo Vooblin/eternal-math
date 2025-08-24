@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Comprehensive error handling and input validation throughout the core module
+- Detailed type checking for all mathematical functions (gcd, lcm, is_prime, prime_factorization)
+- Input validation for Set and Function classes
+- Comprehensive test suite for error handling (21 additional tests)
+
+### Changed
+
+- Enhanced function docstrings with detailed parameter descriptions and exception information
+- `prime_factorization` now raises `ValueError` for inputs less than 2 (previously returned empty list)
+- All core functions now provide clear error messages for invalid inputs
+
+### Fixed
+
+- Improved robustness against invalid user inputs
+- Better error messages for debugging and user experience
+
 ## [0.1.0] - 2025-08-23
 
 ### Added

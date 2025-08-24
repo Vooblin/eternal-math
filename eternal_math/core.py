@@ -22,6 +22,8 @@ class Set(MathematicalObject):
         self, elements: Optional[List[Any]] = None, name: Optional[str] = None
     ):
         super().__init__(name)
+        if elements is not None and not isinstance(elements, list):
+            raise TypeError("Elements must be a list")
         self.elements = list(set(elements or []))
 
     def __contains__(self, item: Any) -> bool:
@@ -34,15 +36,54 @@ class Set(MathematicalObject):
         return iter(self.elements)
 
     def union(self, other: "Set") -> "Set":
-        """Return the union of this set with another."""
+        """
+        Return the union of this set with another.
+
+        Args:
+            other: Another Set object
+
+        Returns:
+            New Set containing elements from both sets
+
+        Raises:
+            TypeError: If other is not a Set instance
+        """
+        if not isinstance(other, Set):
+            raise TypeError("Argument must be a Set instance")
         return Set(self.elements + other.elements)
 
     def intersection(self, other: "Set") -> "Set":
-        """Return the intersection of this set with another."""
+        """
+        Return the intersection of this set with another.
+
+        Args:
+            other: Another Set object
+
+        Returns:
+            New Set containing elements common to both sets
+
+        Raises:
+            TypeError: If other is not a Set instance
+        """
+        if not isinstance(other, Set):
+            raise TypeError("Argument must be a Set instance")
         return Set([x for x in self.elements if x in other])
 
     def difference(self, other: "Set") -> "Set":
-        """Return the difference of this set with another."""
+        """
+        Return the difference of this set with another.
+
+        Args:
+            other: Another Set object
+
+        Returns:
+            New Set containing elements in this set but not in other
+
+        Raises:
+            TypeError: If other is not a Set instance
+        """
+        if not isinstance(other, Set):
+            raise TypeError("Argument must be a Set instance")
         return Set([x for x in self.elements if x not in other])
 
 
@@ -57,6 +98,8 @@ class Function(MathematicalObject):
         name: Optional[str] = None,
     ):
         super().__init__(name)
+        if not callable(func):
+            raise TypeError("func must be callable")
         self.func = func
         self.domain = domain
         self.codomain = codomain
@@ -67,7 +110,21 @@ class Function(MathematicalObject):
         return self.func(x)
 
     def compose(self, other: "Function") -> "Function":
-        """Compose this function with another function."""
+        """
+        Compose this function with another function.
+
+        Args:
+            other: Another Function object
+
+        Returns:
+            New Function representing the composition
+
+        Raises:
+            TypeError: If other is not a Function instance
+        """
+        if not isinstance(other, Function):
+            raise TypeError("Argument must be a Function instance")
+
         return Function(
             lambda x: self(other(x)),
             other.domain,
@@ -79,19 +136,65 @@ class Function(MathematicalObject):
 def gcd(a: int, b: int) -> int:
     """
     Calculate the greatest common divisor of two integers using Euclidean algorithm.
+
+    Args:
+        a: First integer
+        b: Second integer
+
+    Returns:
+        The greatest common divisor of a and b
+
+    Raises:
+        TypeError: If either argument is not an integer
+        ValueError: If both arguments are zero
     """
+    if not isinstance(a, int) or not isinstance(b, int):
+        raise TypeError("Both arguments must be integers")
+
+    if a == 0 and b == 0:
+        raise ValueError("GCD is undefined when both arguments are zero")
+
     while b:
         a, b = b, a % b
     return abs(a)
 
 
 def lcm(a: int, b: int) -> int:
-    """Calculate the least common multiple of two integers."""
+    """
+    Calculate the least common multiple of two integers.
+
+    Args:
+        a: First integer
+        b: Second integer
+
+    Returns:
+        The least common multiple of a and b
+
+    Raises:
+        TypeError: If either argument is not an integer
+    """
+    if not isinstance(a, int) or not isinstance(b, int):
+        raise TypeError("Both arguments must be integers")
+
     return abs(a * b) // gcd(a, b) if a and b else 0
 
 
 def is_prime(n: int) -> bool:
-    """Check if a number is prime using trial division."""
+    """
+    Check if a number is prime using trial division.
+
+    Args:
+        n: The number to check for primality
+
+    Returns:
+        True if n is prime, False otherwise
+
+    Raises:
+        TypeError: If n is not an integer
+    """
+    if not isinstance(n, int):
+        raise TypeError("Argument must be an integer")
+
     if n < 2:
         return False
     if n == 2:
@@ -106,11 +209,26 @@ def is_prime(n: int) -> bool:
 
 
 def prime_factorization(n: int) -> List[int]:
-    """Return the prime factorization of a positive integer."""
-    if n < 2:
-        return []
+    """
+    Return the prime factorization of a positive integer.
 
-    factors = []
+    Args:
+        n: The positive integer to factorize
+
+    Returns:
+        List of prime factors in ascending order
+
+    Raises:
+        TypeError: If n is not an integer
+        ValueError: If n is less than 2
+    """
+    if not isinstance(n, int):
+        raise TypeError("Argument must be an integer")
+
+    if n < 2:
+        raise ValueError("Prime factorization is only defined for integers >= 2")
+
+    factors: List[int] = []
     d = 2
     while d * d <= n:
         while n % d == 0:
