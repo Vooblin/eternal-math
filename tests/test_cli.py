@@ -360,7 +360,7 @@ class TestEternalMathCLI(unittest.TestCase):
         """Test plot function command."""
         mock_viz_instance = MagicMock()
         mock_visualizer.return_value = mock_viz_instance
-        
+
         self.cli._plot_function(["sin(x)"])
         mock_print.assert_called()
         calls = [str(call) for call in mock_print.call_args_list]
