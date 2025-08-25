@@ -11,6 +11,7 @@ __author__ = "Dmitrii Murygin"
 # Import core functionality with explicit __all__ to avoid F403/F401 issues
 from .benchmarks import *  # noqa: F403, F401
 from .core import *  # noqa: F403, F401
+from .linear_algebra import *  # noqa: F403, F401
 from .number_theory import *  # noqa: F403, F401
 from .proofs import *  # noqa: F403, F401
 from .symbolic import *  # noqa: F403, F401
@@ -58,6 +59,10 @@ __all__ = [
     "AlgebraUtils",
     "CONSTANTS",
     "FUNCTIONS",
+    # Linear algebra
+    "Vector",
+    "MatrixOperations",
+    "LinearAlgebra",
     # Visualization
     "MathVisualizer",
     # Benchmarking
