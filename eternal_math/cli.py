@@ -9,10 +9,13 @@ from typing import Any, Dict, List
 
 from eternal_math import (
     CalculusUtils,
+    LinearAlgebra,
     MathVisualizer,
+    MatrixOperations,
     NumberTheoryUtils,
     PerformanceBenchmark,
     SymbolicMath,
+    Vector,
     collatz_sequence,
     create_fundamental_theorem_of_arithmetic,
     create_output_directory,
@@ -54,6 +57,16 @@ class EternalMathCLI:
             "limit": self._limit,
             "taylor": self._taylor_series,
             "substitute": self._substitute,
+            # Linear algebra commands
+            "vector": self._create_vector,
+            "matrix": self._create_matrix,
+            "det": self._determinant,
+            "inverse": self._matrix_inverse,
+            "eigenvals": self._eigenvalues,
+            "solve_system": self._solve_linear_system,
+            "dot": self._vector_dot_product,
+            "cross": self._vector_cross_product,
+            "angle": self._vector_angle,
             # Visualization commands
             "plot": self._plot_function,
             "plotseq": self._plot_sequence,
@@ -125,7 +138,17 @@ class EternalMathCLI:
         print("  limit <expr> <var> <point> - Compute limit")
         print("  taylor <expr> <var> [point] [order] - Taylor series")
         print("  substitute <expr> <var=val> - Substitute values")
-        print("\n📊 Visualization:")
+        print("\n� Linear Algebra:")
+        print("  vector <c1> <c2> ... - Create vector from components")
+        print("  matrix <rows> <cols> <elements...> - Create matrix")
+        print("  det <rows> <cols> <elements...> - Matrix determinant")
+        print("  inverse <rows> <cols> <elements...> - Matrix inverse")
+        print("  eigenvals <rows> <cols> <elements...> - Eigenvalues")
+        print("  solve_system <matrix_args...> <vector_args...> - Solve Ax=b")
+        print("  dot <dim> <v1_components...> <v2_components...> - Dot product")
+        print("  cross <v1_x> <v1_y> <v1_z> <v2_x> <v2_y> <v2_z> - Cross product")
+        print("  angle <dim> <v1_components...> <v2_components...> - Vector angle")
+        print("\n�📊 Visualization:")
         print("  plot <expr>       - Plot mathematical function")
         print("  plotseq <type> <n> - Plot sequence (fibonacci/primes)")
         print("  plotprimes <n>    - Plot prime distribution up to n")
@@ -824,6 +847,255 @@ class EternalMathCLI:
 
             except Exception as e:
                 print(f"❌ Benchmark failed: {e}")
+
+    # Linear Algebra Commands
+
+    def _create_vector(self, args: List[str]) -> None:
+        """Create and display a vector."""
+        if not args:
+            print("Usage: vector <component1> <component2> ...")
+            print("Example: vector 1 2 3")
+            return
+
+        try:
+            components = [float(arg) for arg in args]
+            vector = Vector(components)
+            print(f"\n📐 Vector: {vector}")
+            print(f"   Dimension: {vector.dimension}")
+            print(f"   Magnitude: {vector.magnitude():.6f}\n")
+        except Exception as e:
+            print(f"Error creating vector: {e}\n")
+
+    def _create_matrix(self, args: List[str]) -> None:
+        """Create and display a matrix."""
+        if not args:
+            print("Usage: matrix <rows> <cols> <element1> <element2> ...")
+            print("Example: matrix 2 2 1 2 3 4  (creates 2x2 matrix [[1,2],[3,4]])")
+            return
+
+        try:
+            if len(args) < 2:
+                raise ValueError("Need at least rows and columns")
+
+            rows = int(args[0])
+            cols = int(args[1])
+
+            if len(args) != 2 + rows * cols:
+                raise ValueError(
+                    f"Need exactly {rows * cols} elements for {rows}x{cols} matrix"
+                )
+
+            elements = [float(arg) for arg in args[2:]]
+            data = []
+            for i in range(rows):
+                row = elements[i * cols : (i + 1) * cols]
+                data.append(row)
+
+            matrix = MatrixOperations.create_matrix(data)
+            print(f"\n📊 Matrix ({rows}x{cols}):")
+            print(matrix)
+            print(
+                f"   Determinant: {MatrixOperations.determinant(matrix)
+                                   if rows == cols else 'N/A (non-square)'}"
+            )
+            print(f"   Rank: {MatrixOperations.rank(matrix)}")
+            if rows == cols:
+                print(f"   Trace: {MatrixOperations.trace(matrix)}\n")
+            else:
+                print()
+        except Exception as e:
+            print(f"Error creating matrix: {e}\n")
+
+    def _determinant(self, args: List[str]) -> None:
+        """Calculate matrix determinant."""
+        if not args:
+            print("Usage: det <rows> <cols> <element1> <element2> ...")
+            print("Example: det 2 2 1 2 3 4")
+            return
+
+        try:
+            matrix = self._parse_matrix_args(args)
+            if matrix.rows != matrix.cols:
+                print("❌ Determinant is only defined for square matrices")
+                return
+
+            det = MatrixOperations.determinant(matrix)
+            print(f"\n🎯 Determinant: {det}\n")
+        except Exception as e:
+            print(f"Error calculating determinant: {e}\n")
+
+    def _matrix_inverse(self, args: List[str]) -> None:
+        """Calculate matrix inverse."""
+        if not args:
+            print("Usage: inverse <rows> <cols> <element1> <element2> ...")
+            print("Example: inverse 2 2 1 2 3 4")
+            return
+
+        try:
+            matrix = self._parse_matrix_args(args)
+            inverse = MatrixOperations.inverse(matrix)
+            print("\n🔄 Matrix Inverse:")
+            print(inverse)
+            print()
+        except Exception as e:
+            print(f"Error calculating inverse: {e}\n")
+
+    def _eigenvalues(self, args: List[str]) -> None:
+        """Calculate matrix eigenvalues."""
+        if not args:
+            print("Usage: eigenvals <rows> <cols> <element1> <element2> ...")
+            print("Example: eigenvals 2 2 1 2 3 4")
+            return
+
+        try:
+            matrix = self._parse_matrix_args(args)
+            if matrix.rows != matrix.cols:
+                print("❌ Eigenvalues are only defined for square matrices")
+                return
+
+            eigenvals = MatrixOperations.eigenvalues(matrix)
+            print(f"\n⚡ Eigenvalues: {eigenvals}\n")
+        except Exception as e:
+            print(f"Error calculating eigenvalues: {e}\n")
+
+    def _solve_linear_system(self, args: List[str]) -> None:
+        """Solve linear system Ax = b."""
+        if len(args) < 3:
+            print(
+                "Usage: solve_system <matrix_rows> <matrix_cols> <matrix_elements...>"
+                " <vector_elements...>"
+            )
+            print(
+                "Example: solve_system 2 2 2 1 1 1 3 2"
+                "  (solves 2x1 matrix + 1x1 matrix = [3,2])"
+            )
+            return
+
+        try:
+            rows = int(args[0])
+            cols = int(args[1])
+
+            if len(args) < 2 + rows * cols + rows:
+                raise ValueError(
+                    f"Need {rows * cols} matrix elements + {rows} vector elements"
+                )
+
+            # Parse matrix
+            matrix_elements = [float(args[i]) for i in range(2, 2 + rows * cols)]
+            matrix_data = []
+            for i in range(rows):
+                row = matrix_elements[i * cols : (i + 1) * cols]
+                matrix_data.append(row)
+            matrix = MatrixOperations.create_matrix(matrix_data)
+
+            # Parse vector
+            vector_elements = [
+                float(args[i]) for i in range(2 + rows * cols, 2 + rows * cols + rows)
+            ]
+            vector = MatrixOperations.create_matrix(
+                [[elem] for elem in vector_elements]
+            )
+
+            solution = MatrixOperations.solve_system(matrix, vector)
+            print("\n✅ Solution to Ax = b:")
+            print(f"   x = {solution.T}\n")  # Transpose for row vector display
+        except Exception as e:
+            print(f"Error solving system: {e}\n")
+
+    def _vector_dot_product(self, args: List[str]) -> None:
+        """Calculate dot product of two vectors."""
+        if len(args) < 4:
+            print("Usage: dot <dim> <v1_components...> <v2_components...>")
+            print("Example: dot 3 1 2 3 4 5 6  (dot product of [1,2,3] and [4,5,6])")
+            return
+
+        try:
+            dim = int(args[0])
+            if len(args) != 1 + 2 * dim:
+                raise ValueError(
+                    f"Need {2 * dim} vector components for dimension {dim}"
+                )
+
+            v1_components = [float(args[i]) for i in range(1, 1 + dim)]
+            v2_components = [float(args[i]) for i in range(1 + dim, 1 + 2 * dim)]
+
+            v1 = Vector(v1_components)
+            v2 = Vector(v2_components)
+
+            dot_product = v1.dot(v2)
+            print("\n⚡ Dot Product:")
+            print(f"   {v1} · {v2} = {dot_product}\n")
+        except Exception as e:
+            print(f"Error calculating dot product: {e}\n")
+
+    def _vector_cross_product(self, args: List[str]) -> None:
+        """Calculate cross product of two 3D vectors."""
+        if len(args) != 6:
+            print("Usage: cross <v1_x> <v1_y> <v1_z> <v2_x> <v2_y> <v2_z>")
+            print("Example: cross 1 0 0 0 1 0")
+            return
+
+        try:
+            v1_components = [float(args[i]) for i in range(3)]
+            v2_components = [float(args[i]) for i in range(3, 6)]
+
+            v1 = Vector(v1_components)
+            v2 = Vector(v2_components)
+
+            cross_product = v1.cross(v2)
+            print("\n❌ Cross Product:")
+            print(f"   {v1} × {v2} = {cross_product}\n")
+        except Exception as e:
+            print(f"Error calculating cross product: {e}\n")
+
+    def _vector_angle(self, args: List[str]) -> None:
+        """Calculate angle between two vectors."""
+        if len(args) < 4:
+            print("Usage: angle <dim> <v1_components...> <v2_components...>")
+            print("Example: angle 2 1 0 0 1  (angle between [1,0] and [0,1])")
+            return
+
+        try:
+            dim = int(args[0])
+            if len(args) != 1 + 2 * dim:
+                raise ValueError(
+                    f"Need {2 * dim} vector components for dimension {dim}"
+                )
+
+            v1_components = [float(args[i]) for i in range(1, 1 + dim)]
+            v2_components = [float(args[i]) for i in range(1 + dim, 1 + 2 * dim)]
+
+            v1 = Vector(v1_components)
+            v2 = Vector(v2_components)
+
+            angle_rad = LinearAlgebra.vector_angle(v1, v2)
+            angle_deg = float(angle_rad) * 180 / 3.14159
+            print("\n📐 Angle between vectors:")
+            print(f"   {v1} and {v2}")
+            print(f"   Angle: {float(angle_rad):.6f} radians ({angle_deg:.2f}°)\n")
+        except Exception as e:
+            print(f"Error calculating angle: {e}\n")
+
+    def _parse_matrix_args(self, args: List[str]) -> Any:
+        """Helper method to parse matrix from command arguments."""
+        if len(args) < 2:
+            raise ValueError("Need at least rows and columns")
+
+        rows = int(args[0])
+        cols = int(args[1])
+
+        if len(args) != 2 + rows * cols:
+            raise ValueError(
+                f"Need exactly {rows * cols} elements for {rows}x{cols} matrix"
+            )
+
+        elements = [float(arg) for arg in args[2:]]
+        data = []
+        for i in range(rows):
+            row = elements[i * cols : (i + 1) * cols]
+            data.append(row)
+
+        return MatrixOperations.create_matrix(data)
 
 
 def main() -> None:
